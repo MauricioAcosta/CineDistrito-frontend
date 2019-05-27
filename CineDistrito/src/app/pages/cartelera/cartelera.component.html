@@ -1,0 +1,196 @@
+<!-- <section id="modal-log-in"> -->
+  <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Ingresa tus datos</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+          <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+            <div class="form-group">
+              <a href="" class="float-right">Nuevo por aqui?</a>
+              <label for="uname1">ID</label>
+              <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+              <div class="invalid-feedback">Olvidaste esto.</div>
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+              <div class="invalid-feedback">Ingresa tu contraseña!</div>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="rememberMe">
+              <label class="custom-control-label" for="rememberMe">Recuerdame</label>
+            </div>
+            <div class="form-group py-4">
+              <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+              <button type="submit" class="btn btn-danger btn-lg float-right" id="btnLogin">Entrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+<!-- <section id="social">-->
+<!-- </section>  -->
+<div class="container">
+  <div id="socialRow" class="row">
+    <div class="col col-sm-12">
+      <nav class="navbar navbar-light navbar-nav">
+        <ul class="navbar-nav flex-row text-center">
+          <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fab fa-facebook"></i></a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fab fa-twitter"></i></a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fab fa-youtube"></i></a></li>
+          <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fab fa-instagram"></i></a></li>
+          <li class="nav-item"><a class="nav-link px-2" data-toggle="modal" data-target="#loginModal"><i class="fas fa-user"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- </section> -->
+
+<!-- <section id="mainMenu"> -->
+  <div class="container">
+    <div id="mainRow" class="row">
+      <div id="iconMain" class="col col-sm-3">
+        <a href="index.html"><img src="/assets/img/CD14.png" style="max-width: 100%;"></a>
+      </div>
+      <div id="navMain" class="col col-sm-6 align-self-center">
+        <nav id="navTagMain" class="">
+          <ul class="nav nav-pills nav-fill">
+            <li class="nav-item"><a class="nav-link px-2" href="cartelera.html">CARTELERA</a></li>
+            <li class="nav-item"><a class="nav-link px-2" href="#">MULTIPLEX</a></li>
+            <li class="nav-item"><a class="nav-link px-2" href="promociones.html">PROMOCIONES</i></a></li>
+            <li class="nav-item"><a class="nav-link px-2" href="#">CONFITERIA</i></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col col-sm-3 align-self-center">
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Multiplex
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Tintal</a>
+            <a class="dropdown-item" href="#">Americas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+<!-- <section id="presentation-peliculas"> -->
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <img src="/assets/img/presentacionperlicula_4.jpg">
+      </div>
+      <div id="textopresentacionpeliculas" class="column">
+        <br>
+        <p>Vive toda la emoción de las películas en CineDistrito ;)</p>
+      </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+<!-- <section id="menu-peliculas"> -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-sm-12">
+        <nav>
+          <div class="nav nav-tabs nav-fill w-100 flex-md-row" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Cartelera</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Proximamente</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+
+<!-- <section id="contenido-menu-peliculas"> -->
+  <div class="container">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="row">
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-danger">Reservar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-danger">Reservar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-danger">Reservar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="row">
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col xs-12 sm-12">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16af229e680%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16af229e680%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.5%22%20y%3D%2298.4%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </section> -->
