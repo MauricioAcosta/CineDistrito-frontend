@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  url: 'http://192.168.98.69:8000/rdm',
+  KEYCLOAK_URL: 'http://192.168.98.69:8080/auth',
+  geoserver: 'http://192.168.98.69:8000/geoserver/'
 };
 
 /*

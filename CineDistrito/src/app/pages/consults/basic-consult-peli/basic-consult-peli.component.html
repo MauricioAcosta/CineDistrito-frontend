@@ -1,0 +1,15 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="icon-magnifier"></i> Consulta
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="inputFMI">Nombre de la pelicula</label>
+        <input type="text" class="form-control" id="inputPelicula" [(ngModel)]="inputPelicula" placeholder="Avengers">
+      </div>
+
+      <button (click)="search()" class="btn btn-primary" type="submit">Buscar</button>
+    </div>
+  </div>
+</div>
