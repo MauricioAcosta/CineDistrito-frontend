@@ -2,6 +2,29 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
+## Before execution
+
+- Install node, alternative install n
+```bash
+curl -L https://git.io/n-install | bash
+```
+- Install Angular 7
+```bash
+sudo npm i -g @angular/cli@latest
+```
+- Within the project CineDistrito, Install dependencies and execution project
+```bash
+sudo npm i -g @angular/cli@latest
+npm start
+```
+- Another way to execute
+```bash
+./start.sh
+```
+- Open browser
+```bash
+http://localhost:4200
+```
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
