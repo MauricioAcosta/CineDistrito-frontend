@@ -15,6 +15,7 @@ sudo npm i -g @angular/cli@latest
 - Within the project CineDistrito, Install dependencies and execution project
 ```bash
 sudo npm i -g @angular/cli@latest
+npm install
 npm start
 ```
 - Another way to execute
