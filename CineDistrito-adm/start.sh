@@ -1,6 +1,5 @@
 #!/bin/bash -ex
 echo "Ejecutando con usuario: $USER y grupo: $GROUPS"
-
-npm install
-npm start
+echo 'Si no has instalado los node_modules ejecuta npm install'
 echo "Open in your navigation http://localhost:4200/"
+ng serve -o
