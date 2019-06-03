@@ -8,6 +8,8 @@ import { CarteleraComponent } from './pages/cartelera/cartelera.component';
 import { MultiplexComponent } from './pages/multiplex/multiplex.component';
 import { PromocionesComponent } from './pages/promociones/promociones.component';
 import { ConfiteriaComponent } from './pages/confiteria/confiteria.component';
+import { HeaderComponent } from './sections/header/header.component';
+import { FooterComponent } from './sections/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ConfiteriaComponent } from './pages/confiteria/confiteria.component';
     CarteleraComponent,
     MultiplexComponent,
     PromocionesComponent,
-    ConfiteriaComponent
+    ConfiteriaComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
