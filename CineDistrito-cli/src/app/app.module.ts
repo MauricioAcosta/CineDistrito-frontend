@@ -12,7 +12,7 @@ import { HeaderComponent } from './sections/header/header.component';
 import { FooterComponent } from './sections/footer/footer.component';
 import { RouterModule, Routes } from '@angular/router';
 
-const appRoutes: Routes = [
+const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
     path: 'cartelera', 
     component: CarteleraComponent },
@@ -24,6 +24,11 @@ const appRoutes: Routes = [
     path: 'multiplex',
     component: MultiplexComponent,
     data: { title: 'Multiplex' }
+  },
+  {
+    path: 'promociones',
+    component: PromocionesComponent,
+    data: { title: 'Promociones' }
   },
   {
     path: 'home',
