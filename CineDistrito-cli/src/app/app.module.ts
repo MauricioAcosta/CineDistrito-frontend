@@ -10,6 +10,31 @@ import { PromocionesComponent } from './pages/promociones/promociones.component'
 import { ConfiteriaComponent } from './pages/confiteria/confiteria.component';
 import { HeaderComponent } from './sections/header/header.component';
 import { FooterComponent } from './sections/footer/footer.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { 
+    path: 'cartelera', 
+    component: CarteleraComponent },
+  { 
+    path: 'confiteria',      
+    component: ConfiteriaComponent 
+  },
+  {
+    path: 'multiplex',
+    component: MultiplexComponent,
+    data: { title: 'Multiplex' }
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    data: { title: 'Multiplex' }
+  },
+  { path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   declarations: [
@@ -24,7 +49,11 @@ import { FooterComponent } from './sections/footer/footer.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
