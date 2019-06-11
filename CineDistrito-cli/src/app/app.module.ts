@@ -3,14 +3,16 @@ import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CarteleraComponent } from './pages/cartelera/cartelera.component';
-import { MultiplexComponent } from './pages/multiplex/multiplex.component';
-import { PromocionesComponent } from './pages/promociones/promociones.component';
-import { ConfiteriaComponent } from './pages/confiteria/confiteria.component';
-import { HeaderComponent } from './sections/header/header.component';
-import { FooterComponent } from './sections/footer/footer.component';
+import { HomeComponent } from './componentes/pages/home/home.component';
+import { CarteleraComponent } from './componentes/pages/cartelera/cartelera.component';
+import { MultiplexComponent } from './componentes/pages/multiplex/multiplex.component';
+import { PromocionesComponent } from './componentes/pages/promociones/promociones.component';
+import { ConfiteriaComponent } from './componentes/pages/confiteria/confiteria.component';
+import { HeaderComponent } from './componentes/sections/header/header.component';
+import { FooterComponent } from './componentes/sections/footer/footer.component'
 import { RouterModule, Routes } from '@angular/router';
+import { ProximamenteComponent } from './componentes/pages/cartelera/proximamente/proximamente.component';
+import { ActualComponent } from './componentes/pages/cartelera/actual/actual.component';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -50,7 +52,9 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     PromocionesComponent,
     ConfiteriaComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ProximamenteComponent,
+    ActualComponent
   ],
   imports: [
     NgbModule,
