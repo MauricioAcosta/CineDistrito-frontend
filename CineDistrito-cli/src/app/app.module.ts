@@ -17,7 +17,19 @@ import { ActualComponent } from './componentes/pages/cartelera/actual/actual.com
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
     path: 'cartelera', 
-    component: CarteleraComponent },
+    component: CarteleraComponent ,
+    data: { title: 'cartelera' }
+  },
+  {
+    path: 'cartelera_actual',
+    component: ActualComponent,
+    data: { title: 'cartelera_actual' }
+  },
+  {
+    path: 'cartelera_proximamente',
+    component: ProximamenteComponent,
+    data: { title: 'cartelera_proximamente' }
+  },
   { 
     path: 'confiteria',      
     component: ConfiteriaComponent 
@@ -35,7 +47,7 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
   {
     path: 'home',
     component: HomeComponent,
-    data: { title: 'Multiplex' }
+    data: { title: 'Home' }
   },
   { path: '',
     redirectTo: '/home',

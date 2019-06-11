@@ -16,8 +16,8 @@
 <div class="col col-sm-12">
     <nav>
         <div class="nav nav-tabs nav-fill w-100 flex-md-row" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-cartelera" [ngClass]="{ 'active':activeTab==='nav-cartelera'}" (click)="setCartelera('nav-cartelera')" role="tab" aria-controls="nav-home" aria-selected="true">Cartelera</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-proximamente" [ngClass]="{ 'active':activeTab==='nav-proximamente'}" (click)="setProximamente('nav-proximamente')" role="tab" aria-controls="nav-profile" aria-selected="false">Proximamente</a>
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"  routerLink = "/cartelera_actual" role="tab" aria-controls="nav-home" aria-selected="true">Cartelera</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" routerLink = "/cartelera_proximamente" role="tab" aria-controls="nav-profile" aria-selected="false">Proximamente</a>
         </div>
     </nav>
 </div>
