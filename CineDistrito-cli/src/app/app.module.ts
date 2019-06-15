@@ -13,6 +13,7 @@ import { FooterComponent } from './componentes/sections/footer/footer.component'
 import { RouterModule, Routes } from '@angular/router';
 import { ProximamenteComponent } from './componentes/pages/cartelera/proximamente/proximamente.component';
 import { ActualComponent } from './componentes/pages/cartelera/actual/actual.component';
+import { ModalloginComponent } from './componentes/sections/modal-login/modal-login.component';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
