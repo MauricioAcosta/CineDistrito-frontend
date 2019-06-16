@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProximamenteComponent } from './componentes/pages/cartelera/proximamente/proximamente.component';
 import { ActualComponent } from './componentes/pages/cartelera/actual/actual.component';
 import { LoginModalComponent } from './componentes/sections/login-modal/login-modal.component';
+import { SignupModalComponent } from './componentes/sections/signup-modal/signup-modal.component';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -68,7 +69,8 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     FooterComponent,
     ProximamenteComponent,
     ActualComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    SignupModalComponent
   ],
   imports: [
     NgbModule,
@@ -81,6 +83,6 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[LoginModalComponent]
+  entryComponents:[LoginModalComponent,SignupModalComponent]
 })
 export class AppModule { }
