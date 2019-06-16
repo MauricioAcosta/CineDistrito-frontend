@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './componentes/pages/home/home.component';
@@ -13,7 +13,7 @@ import { FooterComponent } from './componentes/sections/footer/footer.component'
 import { RouterModule, Routes } from '@angular/router';
 import { ProximamenteComponent } from './componentes/pages/cartelera/proximamente/proximamente.component';
 import { ActualComponent } from './componentes/pages/cartelera/actual/actual.component';
-import { ModalloginComponent } from './componentes/sections/modal-login/modal-login.component';
+import { LoginModalComponent } from './componentes/sections/login-modal/login-modal.component';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -67,7 +67,8 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     HeaderComponent,
     FooterComponent,
     ProximamenteComponent,
-    ActualComponent
+    ActualComponent,
+    LoginModalComponent
   ],
   imports: [
     NgbModule,
@@ -79,6 +80,7 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     )
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[LoginModalComponent]
 })
 export class AppModule { }
