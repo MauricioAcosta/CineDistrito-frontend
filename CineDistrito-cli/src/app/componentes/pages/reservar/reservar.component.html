@@ -1,0 +1,32 @@
+
+<div id="presentation-peliculas">
+    <div class="row">
+        <div class="column">
+            <img src="assets/img/presentacionperlicula_4.jpg">
+        </div>
+        <div id="textopresentacionpeliculas" class="column">
+            <br>
+            <p>Vive toda la emoción de las películas en CineDistrito ;)</p>
+        </div>
+    </div>
+</div>
+<form>
+    <h1 id="nombre_pelicula">Reserva tu boleta para {{nombre_pelicula}}</h1>
+    <img src="assets/img/spiderman-400x400.jpg" class="img-fluid">
+    <div id="Multiplex_formGroup" class="form-group">
+      <label for="Multiplex">Selecciona un Multiplex</label>
+      <select id="Multiplex" class="form-control">
+        <option selected>...</option>
+        <option *ngFor="let cinema of cinema_lista">{{cinema}}</option>
+      </select>
+    </div>
+    <div id="Asiento_formGroup" class="form-group">
+      <label for="Asiento">Selecciona un asiento (Si no encuentras el asiento de tu preferencia, significa que ya fue reservado) </label>
+      <select id="Asiento" class="form-control">
+        <option selected>...</option>
+        <option *ngFor="let asiento of asiento_lista">{{asiento}}</option>
+      </select>
+    </div>
+    <p>Costo : {{precio}}</p>
+    <button type="submit" class="btn btn-danger">Reservar</button>
+  </form>

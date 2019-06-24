@@ -15,6 +15,7 @@ import { ProximamenteComponent } from './componentes/pages/cartelera/proximament
 import { ActualComponent } from './componentes/pages/cartelera/actual/actual.component';
 import { LoginModalComponent } from './componentes/sections/login-modal/login-modal.component';
 import { SignupModalComponent } from './componentes/sections/signup-modal/signup-modal.component';
+import { ReservarComponent } from './componentes/pages/reservar/reservar.component';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -51,6 +52,11 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     component: HomeComponent,
     data: { title: 'Home' }
   },
+  {
+    path: 'reservar',
+    component: ReservarComponent,
+    data: { title: 'Reservar' }
+  },
   { path: '',
     redirectTo: '/home',
     pathMatch: 'full'
@@ -70,7 +76,8 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     ProximamenteComponent,
     ActualComponent,
     LoginModalComponent,
-    SignupModalComponent
+    SignupModalComponent,
+    ReservarComponent
   ],
   imports: [
     NgbModule,
