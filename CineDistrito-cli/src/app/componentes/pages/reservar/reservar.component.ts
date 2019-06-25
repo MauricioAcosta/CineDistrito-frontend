@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+//servicio
+import {ObtenerInformacionPeliculaIMDbService} from '../../../servicios/obtener-informacion-pelicula-imdb.service'
+
+
 @Component({
   selector: 'app-reservar',
   templateUrl: './reservar.component.html',
@@ -7,19 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservarComponent implements OnInit {
 
-  public nombre_pelicula:any;
-  public cinema_lista:any;
-  public asiento_lista:any;
-  public precio:any;
+  public info_pelicula:any;
+  public id_IMDb:any;
 
-  constructor() {
-    this.nombre_pelicula = "Spiderman Far From Home";
-    this.cinema_lista = ["Americas","Tintal"];
-    this.asiento_lista = ["H1","H2","J5","..."];
-    this.precio = 5000;
+  constructor(private ObtenerInformacionPeliculaIMDbService:ObtenerInformacionPeliculaIMDbService) {
+    this.id_IMDb = 'tt6108178';
   }
 
   ngOnInit() {
+    this.ObtenerInformacionPeliculaIMDbService.obtenerInformacionelicula(this.id_IMDb).subscribe(
+      data => {
+        this.info_pelicula = data;
+        console.log(data)
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
 }
