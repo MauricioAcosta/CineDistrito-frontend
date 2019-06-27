@@ -22,6 +22,8 @@ import { ReservarComponent } from './componentes/pages/reservar/reservar.compone
 
 //servicios
 import { ObtenerInformacionPeliculaIMDbService } from './servicios/obtener-informacion-pelicula-imdb.service'
+import {ObtenerPeliculasService} from './servicios/cartelera/obtener-peliculas.service';
+
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -95,7 +97,7 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [ObtenerInformacionPeliculaIMDbService],
+  providers: [ObtenerInformacionPeliculaIMDbService,ObtenerPeliculasService],
   bootstrap: [AppComponent],
   entryComponents:[LoginModalComponent,SignupModalComponent]
 })
