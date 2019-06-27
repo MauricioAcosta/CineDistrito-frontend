@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+//interfaces models for json
+import { ObtenerPeliculas } from 'src/app/models/obtener-peliculas';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObtenerPeliculasService {
 
-  constructor(protected http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  private lista_actual : any;
-
-  obtenerPeliculas() {
-    return this.http.get('http://localhost:8000/api/v1/funciones/funciones/?format=json',
-    {responseType: 'json'});
+  public obtenerPeliculas() {
+    return this.httpClient.get<ObtenerPeliculas>(`http://127.0.0.1:8000/api/v1/funciones/funciones/?format=json`);
   }
 }
