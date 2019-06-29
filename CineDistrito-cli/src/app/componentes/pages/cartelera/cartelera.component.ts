@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-//servicio
-import { ObtenerPeliculasService } from 'src/app/servicios/cartelera/obtener-peliculas.service';
+
 
 @Component({
   selector: 'app-cartelera',
@@ -11,19 +10,10 @@ import { ObtenerPeliculasService } from 'src/app/servicios/cartelera/obtener-pel
 
 export class CarteleraComponent implements OnInit {
 
-  datosPeliculas: any;
 
-  constructor(private ObtenerPeliculasService: ObtenerPeliculasService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.ObtenerPeliculasService.obtenerPeliculas().subscribe(data => {
-      this.datosPeliculas = data;
-      console.log("hola: ", this.datosPeliculas);
-    },
-      error => {
-        console.error(error);
-      }
-    );
   }
 
 }
