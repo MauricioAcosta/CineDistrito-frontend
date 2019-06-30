@@ -37,7 +37,6 @@ export class ActualComponent implements OnInit {
   }
 
   enviarDatosAlServicio(pelicula:Fkpelicula){
-    alert(pelicula.v_nombre);
     this.CompartirDatoPeliculaCarteleraReservaService.setPelicula(pelicula);
   }
 }
