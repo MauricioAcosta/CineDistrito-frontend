@@ -10,7 +10,7 @@
                 <div class="card-body">
                 <h5 class="card-title">{{pelicula.v_nombre}}</h5>
                 <p class="card-text">{{pelicula.tx_sinapsis.substring(0,120)}}...</p>
-                <a class="btn btn-danger" routerLink="/reservar">Reservar</a>
+                <a class="btn btn-danger" (click)="enviarDatosAlServicio(pelicula)" routerLink="/reservar">Reservar</a>
             </div>
         </div>
     </div>

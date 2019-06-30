@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 //servicio
-import {ObtenerInformacionPeliculaIMDbService} from '../../../servicios/obtener-informacion-pelicula-imdb.service';
+import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
+
+//modulo
+import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 
 
 @Component({
@@ -11,12 +14,10 @@ import {ObtenerInformacionPeliculaIMDbService} from '../../../servicios/obtener-
 })
 export class ReservarComponent implements OnInit {
 
-  public info_pelicula:any;
-  public id_IMDb:any;
+  public info_pelicula:Fkpelicula;
   public seatsState:String[];
 
-  constructor(private ObtenerInformacionPeliculaIMDbService:ObtenerInformacionPeliculaIMDbService) {
-    this.id_IMDb = 'tt6108178';
+  constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService) {
     this.seatsState = [];
     let stateRand:Number;
     for (let i=1; i < 61;i++)
@@ -27,14 +28,7 @@ export class ReservarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ObtenerInformacionPeliculaIMDbService.obtenerInformacionelicula(this.id_IMDb).subscribe(
-      data => {
-        this.info_pelicula = data;
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    this.info_pelicula = this.CompartirDatoPeliculaCarteleraReservaService.getPelicula();
   }
 
   convertirNumeroAEstado(numero:Number){

@@ -11,18 +11,12 @@
     </div>
 </div>
 <form>
-    <h3 id="nombre_pelicula">Reserva tu boleta para {{info_pelicula.Title}}</h3>
-    <img src="{{info_pelicula.Poster}}" class="img-fluid">
+    <h3 id="nombre_pelicula">Reserva tu boleta para {{info_pelicula.v_nombre}}</h3>
+    <img src="{{info_pelicula.v_foto}}" class="img-fluid">
     <h3>Sinopsis</h3><hr/>
-    <p id="plot">{{info_pelicula.Plot}}</p>
-    <h3>Director</h3><hr/>
-    <p id="plot">{{info_pelicula.Director}}</p>
-    <h3>Actores</h3><hr/>
-    <p id="plot">{{info_pelicula.Actors}}</p>
-    <h3>Genero</h3><hr/>
-    <p id="plot">{{info_pelicula.Genre}}</p>
+    <p id="plot">{{info_pelicula.tx_sinapsis}}</p>
     <h3>Duración</h3><hr/>
-    <p id="plot">{{info_pelicula.Runtime}}</p>
+    <p id="plot">{{info_pelicula.i_duracion}}</p>
     <h3>Reservar</h3><hr/>
     <div id="Multiplex_formGroup" class="form-group">
       <label for="Multiplex">Selecciona un Multiplex</label>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 //servicio
 import { ObtenerPeliculasService } from 'src/app/servicios/cartelera/obtener-peliculas.service';
+import { CompartirDatoPeliculaCarteleraReservaService } from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
 
 //modulo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
@@ -15,7 +16,7 @@ export class ActualComponent implements OnInit {
 
   public datosPeliculas: Fkpelicula[];
 
-  constructor(private ObtenerPeliculasService: ObtenerPeliculasService) {
+  constructor(private ObtenerPeliculasService: ObtenerPeliculasService,private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService) {
     this.datosPeliculas = [];
    }
 
@@ -35,4 +36,8 @@ export class ActualComponent implements OnInit {
     );
   }
 
+  enviarDatosAlServicio(pelicula:Fkpelicula){
+    alert(pelicula.v_nombre);
+    this.CompartirDatoPeliculaCarteleraReservaService.setPelicula(pelicula);
+  }
 }
