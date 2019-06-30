@@ -22,7 +22,6 @@ export class ReservarComponent implements OnInit {
     this.ObtenerInformacionPeliculaIMDbService.obtenerInformacionelicula(this.id_IMDb).subscribe(
       data => {
         this.info_pelicula = data;
-        console.log(data)
       },
       error => {
         console.error(error);
@@ -30,4 +29,7 @@ export class ReservarComponent implements OnInit {
     );
   }
 
+  onClickMe() {
+    alert("You are my hero!");
+  }
 }

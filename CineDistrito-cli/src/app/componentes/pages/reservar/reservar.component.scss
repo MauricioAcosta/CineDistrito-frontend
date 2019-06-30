@@ -39,3 +39,33 @@ h3{
 #plot{
     margin-top: 2em;
 }
+
+form table{
+    width: 50%;
+    table-layout: fixed;
+}
+
+.borderless td, .borderless th {
+    border: none;
+    margin: 0;
+}
+
+.table .active {
+    color: blue;
+}
+
+.table .available {
+    color: green;
+}
+
+.table .onprocess{
+    color: orange;
+}
+
+.table .reserved {
+    color: red;
+}
+
+.table button{
+    border: none;
+}
