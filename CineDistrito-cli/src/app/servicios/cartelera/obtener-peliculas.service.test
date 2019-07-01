@@ -20,10 +20,18 @@ export class ObtenerPeliculasService {
   public obtenerPeliculas() {
     let peliculasGuardadas:Number[]=[];
     let n = false;
-    for (let i = 1; i < 10; i++){
-        this.httpClient.get<ObtenerPeliculas>(this.baseURL+i).subscribe(
+    let url= this.baseURL;
+    let aux = "";
+    while (n==false){
+      if (url!=aux){
+        this.httpClient.get<ObtenerPeliculas>(url).subscribe(
           data => {
+            aux = url;
             let datosPagina = data;
+            url = datosPagina.next;
+            if (url==null){
+              n=true;
+            }
             for (let funcion of datosPagina.results){
               if (funcion.v_estado=="activa"){
                 if (!peliculasGuardadas.includes(funcion.fk_pelicula.id)){
@@ -38,6 +46,7 @@ export class ObtenerPeliculasService {
             }
         );
       }
+    }
       return this.peliculasCartelera;
     }
 }

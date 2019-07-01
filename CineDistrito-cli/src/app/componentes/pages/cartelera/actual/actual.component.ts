@@ -5,7 +5,7 @@ import { ObtenerPeliculasService } from 'src/app/servicios/cartelera/obtener-pel
 import { CompartirDatoPeliculaCarteleraReservaService } from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
 
 //modulo
-import { Fkpelicula } from 'src/app/models/obtener-peliculas';
+import { Fkpelicula, ObtenerPeliculas } from 'src/app/models/obtener-peliculas';
 
 @Component({
   selector: 'app-actual',
@@ -15,25 +15,17 @@ import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 export class ActualComponent implements OnInit {
 
   public datosPeliculas: Fkpelicula[];
-
   constructor(private ObtenerPeliculasService: ObtenerPeliculasService,private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService) {
     this.datosPeliculas = [];
    }
 
   ngOnInit() {
-    this.ObtenerPeliculasService.obtenerPeliculas().subscribe(data => {
-      let auxdatosPeliculas = data;
-      for (let funcion of auxdatosPeliculas.results){
-        if (funcion.v_estado=="activa"){
-          this.datosPeliculas.push(funcion.fk_pelicula);
-        }
-      }
-      console.log(this.datosPeliculas[0].v_nombre);
-    },
-      error => {
-        console.error(error);
-      }
-    );
+    let jsonpage = 1;
+    let next=0;
+    let snext:String[]=[];
+
+    this.datosPeliculas = this.ObtenerPeliculasService.obtenerPeliculas();
+   
   }
 
   enviarDatosAlServicio(pelicula:Fkpelicula){
