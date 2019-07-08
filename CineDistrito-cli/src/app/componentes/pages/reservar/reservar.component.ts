@@ -30,7 +30,6 @@ export class ReservarComponent implements OnInit {
   ngOnInit() {
     this.info_pelicula = this.CompartirDatoPeliculaCarteleraReservaService.getPelicula();
     let s:String[]=[];
-    alert(s.length);
   }
 
   convertirNumeroAEstado(numero:Number){
