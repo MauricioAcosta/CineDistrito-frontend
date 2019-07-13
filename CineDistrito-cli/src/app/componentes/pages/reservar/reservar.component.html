@@ -23,8 +23,7 @@
     <div id="Multiplex_formGroup" class="form-group">
       <label for="Multiplex">Selecciona un Multiplex</label>
       <select id="Multiplex" class="form-control">
-        <option selected>...</option>
-        <option *ngFor="let cinema of cinema_lista">{{cinema}}</option>
+        <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
       </select>
     </div>
     <div id="Asiento_formGroup" class="form-group">

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 //servicio
 import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
+import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
 
 //modulo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
+import { Multiplex } from 'src/app/models/reserva/multiplex';
 
 
 @Component({
@@ -16,8 +18,10 @@ export class ReservarComponent implements OnInit {
 
   public info_pelicula:Fkpelicula;
   public seatsState:String[];
+  public multiplex_Lista:Multiplex[];
 
-  constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService) {
+  constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
+              private ObtenerListaMultiplexService:ObtenerListaMultiplexService) {
     this.seatsState = [];
     let stateRand:Number;
     for (let i=1; i < 61;i++)
@@ -29,6 +33,9 @@ export class ReservarComponent implements OnInit {
 
   ngOnInit() {
     this.info_pelicula = this.CompartirDatoPeliculaCarteleraReservaService.getPelicula();
+    //getting Multiplex list
+    this.ObtenerListaMultiplexService.obtenerMultiplexLista(this.info_pelicula.id).subscribe
+    (data=>{this.multiplex_Lista = data},error => {console.error(error)});
     let s:String[]=[];
   }
 
@@ -49,12 +56,13 @@ export class ReservarComponent implements OnInit {
   }
 
   onClickMe() {
-    let stateRand:Number;
+    alert(this.multiplex_Lista[0].v_nombre);
+    /*let stateRand:Number;
     for (let i=1; i < 61;i++)
     {
       stateRand = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
       this.seatsState[i-1]=this.convertirNumeroAEstado(stateRand);
-    }
+    }*/
   }
 
   verificarestado_sillas(){
