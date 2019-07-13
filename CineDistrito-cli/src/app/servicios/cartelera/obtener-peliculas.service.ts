@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 //interfaces models for json
-import { ObtenerPeliculas, Fkpelicula } from 'src/app/models/obtener-peliculas';
+import { ObtenerPeliculas} from 'src/app/models/obtener-peliculas';
 
 @Injectable({
   providedIn: 'root'

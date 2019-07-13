@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
-//moddulos
+//modelo
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 
 @Injectable({
@@ -10,12 +10,10 @@ import { Multiplex } from 'src/app/models/reserva/multiplex';
 
 export class ObtenerListaMultiplexService {
 
-  private multiplex_lista:Multiplex[];
   private baseURL:string;
   private format:string;
 
   constructor(private httpClient: HttpClient) { 
-    this.multiplex_lista = [];
     this.baseURL = `http://localhost:8000/api/v1/funciones/peliculas-multiplex/`;
     this.format = `/?format=json`
 
