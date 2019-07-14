@@ -28,9 +28,6 @@ export class LoginModalComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // reset login status
-    this.authenticationService.logout();
-
   }
 
   get f() { return this.loginForm.controls; }
@@ -41,11 +38,8 @@ export class LoginModalComponent implements OnInit {
 
   onSubmit(){
     this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(
-        data => {
-          console.log(data);
-        },
-        error => {
-          console.error(error);
+        res =>{
+          console.log(res);
         }
       );
   }

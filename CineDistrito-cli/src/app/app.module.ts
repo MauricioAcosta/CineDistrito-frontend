@@ -25,8 +25,8 @@ import { ReservarComponent } from './componentes/pages/reservar/reservar.compone
 //servicios
 import {ObtenerPeliculasService} from './servicios/cartelera/obtener-peliculas.service';
 import {CompartirDatoPeliculaCarteleraReservaService} from './servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
-import { BasicAuthInterceptorService } from 'src/app/servicios/http/basic-auth-interceptor.service';
-import { ErrorInterceptorService } from 'src/app/servicios/http/error-interceptor.service';
+//import { BasicAuthInterceptorService } from 'src/app/servicios/http/basic-auth-interceptor.service';
+//import { ErrorInterceptorService } from 'src/app/servicios/http/error-interceptor.service';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
