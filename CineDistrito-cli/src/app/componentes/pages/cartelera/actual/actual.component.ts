@@ -15,17 +15,34 @@ import { Fkpelicula, ObtenerPeliculas } from 'src/app/models/obtener-peliculas';
 export class ActualComponent implements OnInit {
 
   public datosPeliculas: Fkpelicula[];
+  public idPeliculasGuardadas:Number[];
+
+
   constructor(private ObtenerPeliculasService: ObtenerPeliculasService,private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService) {
     this.datosPeliculas = [];
+    this.idPeliculasGuardadas = [];
    }
 
   ngOnInit() {
-    let jsonpage = 1;
-    let next=0;
-    let snext:String[]=[];
+    this.obtenerPeliculasPorPagina(null);
+  }
 
-    this.datosPeliculas = this.ObtenerPeliculasService.obtenerPeliculas();
-   
+  obtenerPeliculasPorPagina(page){
+    this.ObtenerPeliculasService.obtenerPeliculas(page).subscribe(
+      data =>{
+        for (let funcion of data.results){
+          if (funcion.v_estado=="activa"){
+            if (!this.idPeliculasGuardadas.includes(funcion.fk_pelicula.id)){
+              this.datosPeliculas.push(funcion.fk_pelicula);
+              this.idPeliculasGuardadas.push(funcion.fk_pelicula.id)
+            }
+          }
+        }
+        if (data.next!=null){
+          this.obtenerPeliculasPorPagina(data.next);
+        }
+      }
+    );
   }
 
   enviarDatosAlServicio(pelicula:Fkpelicula){

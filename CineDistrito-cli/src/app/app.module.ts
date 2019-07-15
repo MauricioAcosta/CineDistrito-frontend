@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 //componentes
 import { HomeComponent } from './componentes/pages/home/home.component';
@@ -23,7 +25,8 @@ import { ReservarComponent } from './componentes/pages/reservar/reservar.compone
 //servicios
 import {ObtenerPeliculasService} from './servicios/cartelera/obtener-peliculas.service';
 import {CompartirDatoPeliculaCarteleraReservaService} from './servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
-
+//import { BasicAuthInterceptorService } from 'src/app/servicios/http/basic-auth-interceptor.service';
+//import { ErrorInterceptorService } from 'src/app/servicios/http/error-interceptor.service';
 
 const appRoutes: Routes = [ //https://angular.io/guide/router
   { 
@@ -92,12 +95,18 @@ const appRoutes: Routes = [ //https://angular.io/guide/router
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [ObtenerPeliculasService,CompartirDatoPeliculaCarteleraReservaService],
+  providers: [ObtenerPeliculasService,
+              CompartirDatoPeliculaCarteleraReservaService,
+              //{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptorService, multi: true },
+              //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
+            ],
   bootstrap: [AppComponent],
   entryComponents:[LoginModalComponent,SignupModalComponent]
 })
