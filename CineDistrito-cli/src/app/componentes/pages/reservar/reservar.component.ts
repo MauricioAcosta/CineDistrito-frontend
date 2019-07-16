@@ -11,6 +11,7 @@ import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-lis
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
+import { Sillas } from 'src/app/models/reserva/sillas';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class ReservarComponent implements OnInit {
   public seatsState:String[];
   public multiplex_Lista:Multiplex[];
   public funcion_lista:Funcionsala[];
+  public silla_lista:Sillas;
   public multiplexSeleccionado:string;
   public funcionSeleccionada:string;
 
@@ -92,6 +94,7 @@ export class ReservarComponent implements OnInit {
 
   onChangeFunciones(){
     let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+    console.log('Funcion seleccionada Sala:'+this.funcion_lista[indice].fk_sala.i_numsala+' Funcion'+this.funcion_lista[indice].fk_funcion.id)
     this.obtenerEstadoSillas(this.funcion_lista[indice].fk_sala.id,this.funcion_lista[indice].fk_funcion.id);
   }
 
@@ -102,7 +105,8 @@ export class ReservarComponent implements OnInit {
   obtenerEstadoSillas(idSala,idFuncion){
     this.ObtenerListadoSillasService.obtenerListado(idFuncion,idSala).subscribe(
       data=>{
-        console.log(data)
+        this.silla_lista = data;
+        console.log(this.silla_lista.disponible[0].v_tipo+' '+this.silla_lista.disponible[0].pk_numero);
       },
       error=>{
         console.error(error)

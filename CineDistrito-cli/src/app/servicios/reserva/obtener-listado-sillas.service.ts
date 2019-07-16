@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 
+
+//modelos
+import { Sillas } from 'src/app/models/reserva/sillas';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +18,7 @@ export class ObtenerListadoSillasService {
     myheaders = myheaders.append("Authorization", "Basic " + localStorage.getItem('currentUser'));
     myheaders = myheaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    return this.httpClient.get<any>('http://localhost:8000/api/v1/reservas/disponibilidad-sillas/'+idFuncion+'/'+idSala+'/?format=json',{headers:myheaders});
+    return this.httpClient.get<Sillas>('http://localhost:8000/api/v1/reservas/disponibilidad-sillas/'+idFuncion+'/'+idSala+'/?format=json',{headers:myheaders});
 
 
   }
