@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// import { QueryService } from 'src/app/services/consult/query.service';
 import { environment } from 'src/environments/environment';
-// import * as jspdf from 'jspdf';
-// import html2canvas from 'html2canvas';
+import { QueryService } from 'src/app/services/consult/query.service';
+import { Personas } from 'src/app/models/personas';
 
-
-//import { Map, TileLayer, CRS, geoJSON } from 'leaflet/dist/leaflet-src.esm.js';
-
-
-// declare var xepOnline: any;
-// declare var jQuery: any;
-// declare var L: any;
 
 @Component({
   selector: 'app-basic-consult-peli',
@@ -18,14 +10,22 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./basic-consult-peli.component.scss']
 })
 export class BasicConsultPeliComponent implements OnInit {
-  showResult = false;
+  showResult = true;
   inputPelicula: string;
-  basicConsult: any;
+  personas: Personas;
 
   // constructor(private service: QueryService) { }
-  constructor() { }
+  constructor(private service: QueryService) { }
   ngOnInit() {
-
+    this.service.GetPersonas().subscribe(
+      response => {
+        this.personas = response
+        console.log('this.personas: ', this.personas.results[0].last_name);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   search() {
@@ -38,22 +38,22 @@ export class BasicConsultPeliComponent implements OnInit {
 
   getBasicInfo() {
     // this.service
-      // .getBasicConsult(this.inputPelicula)
-      // .subscribe(
-      //   data => {
-      //     if (data['error']) {
-      //       console.log(data['error']);
-      //       this.showResult = false;
-      //     } else {
-      //       this.basicConsult = [data[0]];
-      //       console.log(this.basicConsult, "DATA", data);
-      //       this.showResult = true;
-      //     }
-      //   },
-      //   error => {
-      //     console.log(error);
-      //     this.showResult = false;
-      //   }
-      // );
+    // .getBasicConsult(this.inputPelicula)
+    // .subscribe(
+    //   data => {
+    //     if (data['error']) {
+    //       console.log(data['error']);
+    //       this.showResult = false;
+    //     } else {
+    //       this.basicConsult = [data[0]];
+    //       console.log(this.basicConsult, "DATA", data);
+    //       this.showResult = true;
+    //     }
+    //   },
+    //   error => {
+    //     console.log(error);
+    //     this.showResult = false;
+    //   }
+    // );
   }
 }

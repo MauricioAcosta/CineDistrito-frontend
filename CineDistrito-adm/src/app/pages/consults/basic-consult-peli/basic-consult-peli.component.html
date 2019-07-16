@@ -12,4 +12,28 @@
       <button (click)="search()" class="btn btn-primary" type="submit">Buscar</button>
     </div>
   </div>
+  <div id="card" class="card" *ngFor="let item of personal">
+    <form>
+      <div class="card-header">
+        Panel Administrativo Cine Distrito
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-sm-12">
+            <h3>Usuarios: </h3>
+            <div class="bc-result-parcel">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Nombre de Usuario:</label>
+                <div class="col-sm-8">
+                  <div class="form-control">
+                    {{item.results[0].last_name}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

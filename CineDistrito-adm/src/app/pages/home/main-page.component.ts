@@ -1,16 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import { QueryService } from 'src/app/services/consult/query.service';
+import { Personas } from 'src/app/models/personas';
 
 @Component({
   templateUrl: 'main-page.component.html',
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  tab=1;
+  personas: Personas
+  showResult = true;
+  constructor(private service: QueryService) { }
+
   ngOnInit(): void {
-   /*  throw new Error("Method not implemented."); */
+    this.service.GetPersonas().subscribe(
+      response => {
+        this.personas = response
+        console.log('this.personas: ', this.personas.results[0].last_name);
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 

@@ -7,86 +7,89 @@
 // If you want to add something do it here
 @import "custom";
 
-
-body{
-    /*background-image: url("https://static.cinepolis.com/img/bg-cinepolis.jpg");*/
-    background-color: rgb(225, 225, 225);
-    font-family: 'Ubuntu', sans-serif;
+body {
+  /*background-image: url("https://static.cinepolis.com/img/bg-cinepolis.jpg");*/
+  background-color: rgb(225, 225, 225);
+  font-family: "Ubuntu", sans-serif;
 }
 
-#socialRow{
-    background-color: #DAD8D8;
-    color: black;
-    padding:0em;
+#socialRow {
+  background-color: #dad8d8;
+  color: black;
+  padding: 0em;
 }
 
-#mainRow{
-    background-color: white;
-    padding:0.1em;
+#mainRow {
+  background-color: white;
+  padding: 0.1em;
 }
 
-#carouselExampleControls{
-    min-width: 100%;
+#carouselExampleControls {
+  min-width: 100%;
 }
 
-#footerDiv{
-    background-color: #DAD8D8;
-    color: black;
+#footerDiv {
+  background-color: #dad8d8;
+  color: black;
 }
 
-#footerDiv a{
-    color: black;
+#footerDiv a {
+  color: black;
 }
 
-#navTagMain ul li a{
-    color: black;
+#navTagMain ul li a {
+  color: black;
 }
 
-#presentation-peliculas div{
-    background-color: black;
+#presentation-peliculas div {
+  background-color: black;
 }
 
-#presentation-peliculas div div img{
-    max-height: 100px;
+#presentation-peliculas div div img {
+  max-height: 100px;
 }
 
-#presentation-peliculas div div p{
-    color: white;
-    font-size: 20px;
+#presentation-peliculas div div p {
+  color: white;
+  font-size: 20px;
 }
 
-#textopresentacionpeliculas{
-    margin-left: 30px;
+#textopresentacionpeliculas {
+  margin-left: 30px;
 }
 
-#menu-peliculas div{
-    background-color:#DAD8D8;
+#menu-peliculas div {
+  background-color: #dad8d8;
 }
 
-#menu-peliculas .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
-    color:red;
-    background-color: #DAD8D8;
+#menu-peliculas .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: red;
+  background-color: #dad8d8;
 }
 
-#menu-peliculas .nav-item{
-    color: black
+#menu-peliculas .nav-item {
+  color: black;
 }
 
-#contenido-menu-peliculas div{
-    background-color: white;
-    padding-top: 5px;
-    padding-bottom: 5px;
+#contenido-menu-peliculas div {
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-#menu-promociones .container{
-    background-color:#DAD8D8;
+#menu-promociones .container {
+  background-color: #dad8d8;
 }
 
-#menu-promociones div .card{
-    margin-top: 50px;
-    background-color:white;
+#menu-promociones div .card {
+  margin-top: 50px;
+  background-color: white;
 }
 
-.container{
-    min-width: 80%;
+.container {
+  min-width: 80%;
+}
+.manito {
+  cursor: pointer;
 }
