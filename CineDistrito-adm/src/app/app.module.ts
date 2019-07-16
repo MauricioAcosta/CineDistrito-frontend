@@ -41,9 +41,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { TokenInterceptor } from './services/token.interceptor';
-import { CarteleraComponent } from './pages/cartelera/cartelera.component';
-import { MultiplexComponent } from './pages/multiplex/multiplex.component';
-import { PromocionesComponent } from './pages/promociones/promociones.component';
+
 
 
 @NgModule({
@@ -52,10 +50,7 @@ import { PromocionesComponent } from './pages/promociones/promociones.component'
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
-    CarteleraComponent,
-    MultiplexComponent,
-    PromocionesComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

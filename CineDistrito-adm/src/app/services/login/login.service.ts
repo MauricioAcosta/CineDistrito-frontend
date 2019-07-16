@@ -1,29 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class LoginService {
-  url: string = environment.url;
-  private httpOptions;
-  constructor(private http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa('username:password')
-      })
-    };
-  }
+
+  constructor(private http: HttpClient) { }
 
   public login(username: string, password: string) {
-    return this.http.get<any>(`${this.url}/usuarios/personas`, this.headers);
-  }
-
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    let myheaders = new HttpHeaders();
+    myheaders = myheaders.append("Authorization", "Basic " + btoa(username + ":" + password));
+    myheaders = myheaders.append("Content-Type", "application/x-www-form-urlencoded");
+    const httpOptions = { headers: myheaders };
+    return this.http.post<any>('http://127.0.0.1:8000/api/v1/usuarios/autenticar', {}, httpOptions);
   }
 }
