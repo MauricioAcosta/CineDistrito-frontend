@@ -32,6 +32,7 @@ export class ReservarComponent implements OnInit {
   public seatsReady:boolean;
   public functionsReady:boolean;
   public error_log_in:string;
+  public waitingResponse:boolean;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
@@ -42,6 +43,7 @@ export class ReservarComponent implements OnInit {
     this.seatsReady = false;
     this.functionsReady = false;
     this.error_log_in = "";
+    this.waitingResponse = false;
   }
 
   ngOnInit() {
@@ -57,6 +59,7 @@ export class ReservarComponent implements OnInit {
   onChangeMultiplex(){
     this.functionsReady = false;
     this.seatsReady= false;
+    this.waitingResponse = false;
     if (this.multiplexSeleccionado!="..."){
       //getting FuncionesSalas list -test
       this.ObtenerListaFuncionesService.obtenerFuncionesSalas(this.obtenerMultiplexPorNombre(this.multiplexSeleccionado),this.info_pelicula.id).subscribe(
@@ -67,11 +70,14 @@ export class ReservarComponent implements OnInit {
   }
 
   onChangeFunciones(){
+    this.error_log_in = "";
     this.seatsReady= false;
+    this.waitingResponse = false;
     if (this.funcionSeleccionada!="..."){
       let indice = +this.funcionSeleccionada.split(':')[0] - 1;
       console.log('Funcion seleccionada Sala:'+this.funcion_lista[indice].fk_sala.id+' Funcion'+this.funcion_lista[indice].fk_funcion.id)
       this.obtenerEstadoSillas(this.funcion_lista[indice].fk_sala.id,this.funcion_lista[indice].fk_funcion.id);
+      this.waitingResponse = true;
     }
   }
 
@@ -84,11 +90,11 @@ export class ReservarComponent implements OnInit {
       data=>{
         this.silla_lista = data;
         this.actualizarEstadosSillas();
-        this.error_log_in = "";
       },
       error=>{
         this.error_log_in = "Debe ingresar sus credenciales antes de continuar";
-        console.error('.-------.'+error);
+        this.waitingResponse = false;
+        console.error(error);
       }
     )
   }
@@ -104,6 +110,7 @@ export class ReservarComponent implements OnInit {
       this.seatsState[+silla.i_orden]="reserved";
     }
     this.seatsReady= true;
+    this.waitingResponse = false;
   }
   
 

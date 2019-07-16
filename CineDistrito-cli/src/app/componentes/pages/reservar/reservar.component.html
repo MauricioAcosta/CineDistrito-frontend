@@ -36,6 +36,7 @@
     </div>
     <br>
     <p style="color: red">{{error_log_in}}</p>
+    <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
     <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
       <label for="Asiento">Selecciona un asiento </label>
 
