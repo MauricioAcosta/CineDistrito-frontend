@@ -22,14 +22,14 @@
     <h3>Reservar</h3><hr/>
     <div id="Multiplex_formGroup" class="form-group">
       <label for="Multiplex">Selecciona un Multiplex</label>
-      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValue" id="Multiplex" class="form-control">
+      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
         <option>...</option>
         <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
       </select>
       <label for="Multiplex">Selecciona una Función</label>
-      <select id="Funciones" class="form-control">
+      <select [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
         <option>...</option>
-        <option *ngFor="let funcion of this.funcion_lista">Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
+        <option *ngFor="let funcion of this.funcion_lista;let i = index">{{i+1}}: Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
       </select>
     </div>
     <div id="Asiento_formGroup" class="form-group">

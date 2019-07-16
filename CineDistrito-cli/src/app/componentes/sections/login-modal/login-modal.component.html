@@ -1,5 +1,5 @@
 
-<div class="row">
+<div *ngIf="!this.logged_in" class="row">
   <div class="col-12">
     <div class="card card-signin my-5">
       <div class="card-body">
@@ -19,6 +19,16 @@
           <p style="color: red">{{error}}</p>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.logged_in" class="row">
+  <div class="col-12">
+    <div class="card text-center card-signin my-5">
+      <div class="card-body">
+        <h5 class="card-title text-center">Quieres cerrar tu Sesión?</h5>
+        <button class="btn btn-danger" (click)="closeSesion()">Cerrar Sesión</button>
     </div>
   </div>
 </div>

@@ -18,10 +18,19 @@ export class LoginModalComponent implements OnInit {
   loginForm: FormGroup;
   error:string;
 
+  logged_in:boolean;
+
   constructor(public activeModal: NgbActiveModal,
               private authenticationService:AuthenticationService,
               private formBuilder: FormBuilder,
-              private gestionarcredencialesService:GestionarcredencialesService) { }
+              private gestionarcredencialesService:GestionarcredencialesService) {
+                if (this.gestionarcredencialesService.obtenerUsuarioActual()){
+                  this.logged_in = true;
+                }else{
+                  this.logged_in = false;
+                }
+                
+               }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -46,9 +55,14 @@ export class LoginModalComponent implements OnInit {
         },
         error =>{
           console.log(error);
-          this.error="Datos incorrectos";
+          this.error="Los datos ingresados son incorrectos";
         }
       );
+  }
+
+  closeSesion(){
+    this.gestionarcredencialesService.borrarCredenciales();
+    this.activeModal.close('Modal Closed');
   }
 
 

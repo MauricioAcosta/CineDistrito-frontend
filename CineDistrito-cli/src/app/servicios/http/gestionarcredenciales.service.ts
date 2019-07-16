@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { userInfo } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +10,20 @@ export class GestionarcredencialesService {
   guardarCredenciales(user,pass){
     let userData:any;
     userData = window.btoa(user + ':' + pass);
+    localStorage.setItem('username',JSON.stringify(user));
     localStorage.setItem('currentUser', JSON.stringify(userData));
-    console.log(this.obtenerUsuarioActual());
   }
 
   obtenerUsuarioActual(){
+    return localStorage.getItem('username');
+  }
+
+  obtenerCredencialesUsuarioActual(){
     return localStorage.getItem('currentUser');
   }
 
   borrarCredenciales(){
+    localStorage.removeItem('username');
     localStorage.removeItem('currentUser');
   }
 }

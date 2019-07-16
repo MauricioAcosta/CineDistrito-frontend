@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+
 //servicio
 import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
 import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
-import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service'
+import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service';
+import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
@@ -24,10 +26,12 @@ export class ReservarComponent implements OnInit {
   public multiplex_Lista:Multiplex[];
   public funcion_lista:Funcionsala[];
   public multiplexSeleccionado:string;
+  public funcionSeleccionada:string;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
-              private ObtenerListaFuncionesService:ObtenerListaFuncionesService) {
+              private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
+              private ObtenerListadoSillasService:ObtenerListadoSillasService) {
 
     this.seatsState = [];
     let stateRand:Number;
@@ -64,7 +68,8 @@ export class ReservarComponent implements OnInit {
   }
 
   onClickMe() {
-    alert(this.multiplexSeleccionado);
+    console.log(this.funcionSeleccionada)
+    //this.obtenerEstadoSillas();
     /*let stateRand:Number;
     for (let i=1; i < 61;i++)
     {
@@ -85,13 +90,26 @@ export class ReservarComponent implements OnInit {
     }
   }
 
+  onChangeFunciones(){
+    let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+    this.obtenerEstadoSillas(this.funcion_lista[indice].fk_sala.id,this.funcion_lista[indice].fk_funcion.id);
+  }
+
   obtenerMultiplexPorNombre(nombre){
     return this.multiplex_Lista.find(function(element){return element.v_nombre==nombre}).id;
   }
 
-  verificarestado_sillas(){
-
+  obtenerEstadoSillas(idSala,idFuncion){
+    this.ObtenerListadoSillasService.obtenerListado(idFuncion,idSala).subscribe(
+      data=>{
+        console.log(data)
+      },
+      error=>{
+        console.error(error)
+      }
+    )
   }
+  
 
   cambiarestadosilla_disponible(id){
     
