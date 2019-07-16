@@ -14,7 +14,7 @@ export class ObtenerListaMultiplexService {
   private format:string;
 
   constructor(private httpClient: HttpClient) { 
-    this.baseURL = `http://localhost:8000/api/v1/funciones/peliculas-multiplex/`;
+    this.baseURL = `http://127.0.0.1:8000/api/v1/funciones/peliculas-multiplex/`;
     this.format = `/?format=json`
 
   }

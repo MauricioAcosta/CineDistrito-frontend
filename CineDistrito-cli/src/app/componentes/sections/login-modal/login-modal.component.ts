@@ -14,9 +14,7 @@ import { AuthenticationService } from 'src/app/servicios/http/authentication.ser
 export class LoginModalComponent implements OnInit {
 
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
+  error:string;
 
   constructor(public activeModal: NgbActiveModal,
               private authenticationService:AuthenticationService,
@@ -38,8 +36,13 @@ export class LoginModalComponent implements OnInit {
 
   onSubmit(){
     this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(
-        res =>{
-          console.log(res);
+        response =>{
+          console.log(response);
+          this.activeModal.close('Modal Closed');
+        },
+        error =>{
+          console.log(error);
+          this.error="Datos incorrectos";
         }
       );
   }
