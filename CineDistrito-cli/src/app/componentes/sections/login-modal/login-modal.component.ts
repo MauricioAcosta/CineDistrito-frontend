@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+//servicios
 import { AuthenticationService } from 'src/app/servicios/http/authentication.service';
+import { GestionarcredencialesService} from 'src/app/servicios/http/gestionarcredenciales.service';
 
 
 
@@ -18,7 +20,8 @@ export class LoginModalComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal,
               private authenticationService:AuthenticationService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private gestionarcredencialesService:GestionarcredencialesService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -38,6 +41,7 @@ export class LoginModalComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(
         response =>{
           console.log(response);
+          this.gestionarcredencialesService.guardarCredenciales(this.f.username.value,this.f.password.value);
           this.activeModal.close('Modal Closed');
         },
         error =>{
