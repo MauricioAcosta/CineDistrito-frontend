@@ -7,13 +7,14 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './pages/error/404.component';
 import { P500Component } from './pages/error/500.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',
-    pathMatch: 'full',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page'
+    }
   },
   {
     path: '404',
@@ -27,20 +28,6 @@ export const routes: Routes = [
     component: P500Component,
     data: {
       title: 'Page 500'
-    }
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    data: {
-      title: 'Register Page'
     }
   },
   {
