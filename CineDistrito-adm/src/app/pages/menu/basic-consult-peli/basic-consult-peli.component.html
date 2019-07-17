@@ -1,39 +1,38 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div class="card-header">
-      <i class="icon-magnifier"></i> Consulta
-    </div>
-    <div class="card-body">
-      <div class="form-group">
-        <label for="inputFMI">Nombre de la pelicula</label>
-        <input type="text" class="form-control" id="inputPelicula" [(ngModel)]="inputPelicula" placeholder="Avengers">
-      </div>
-
-      <button (click)="search()" class="btn btn-primary" type="submit">Buscar</button>
-    </div>
-  </div>
-  <div id="card" class="card" *ngFor="let item of personal">
-    <form>
+<div class="animated fadeIn dura-5">
+  <div class="col-12">
+    <div class="card">
       <div class="card-header">
-        Panel Administrativo Cine Distrito
+        <h4 class="text-center">Usuarios Registrados en el sistema</h4>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-xs-12 col-md-6 col-sm-12">
-            <h3>Usuarios: </h3>
-            <div class="bc-result-parcel">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Nombre de Usuario:</label>
-                <div class="col-sm-8">
-                  <div class="form-control">
-                    {{item.results[0].last_name}}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <table class="table" style="width: 100%">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Pelicula</th>
+              <th scope="col">Duración</th>
+              <th scope="col">Sinapsis</th>
+              <th scope="col">Imagen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of peliculas.results'>
+              <td>
+                {{item.v_nombre}}
+              </td>
+              <td>
+                {{item.i_duracion}}
+              </td>
+              <td>
+                {{item.tx_sinapsis}}
+              </td>
+              <td>
+                <img src="{{item.tx_sinapsis}}" alt="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </form>
+    </div>
   </div>
 </div>

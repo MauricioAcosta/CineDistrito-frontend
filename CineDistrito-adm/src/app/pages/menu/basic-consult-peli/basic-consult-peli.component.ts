@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { QueryService } from 'src/app/services/consult/query.service';
-import { Personas } from 'src/app/models/personas';
+import { Peliculas } from 'src/app/models/peliculas';
 
 
 @Component({
@@ -12,15 +12,15 @@ import { Personas } from 'src/app/models/personas';
 export class BasicConsultPeliComponent implements OnInit {
   showResult = true;
   inputPelicula: string;
-  personas: Personas;
+  peliculas: Peliculas;
 
   // constructor(private service: QueryService) { }
   constructor(private service: QueryService) { }
   ngOnInit() {
-    this.service.GetPersonas().subscribe(
+    this.service.GetPeliculas().subscribe(
       response => {
-        this.personas = response
-        console.log('this.personas: ', this.personas.results[0].last_name);
+        this.peliculas = response
+        console.log('this.peliculas: ', this.peliculas);
       },
       error => {
         console.log(error);
@@ -28,32 +28,4 @@ export class BasicConsultPeliComponent implements OnInit {
     );
   }
 
-  search() {
-    if (this.inputPelicula) {
-      this.getBasicInfo();
-    } else {
-      this.showResult = false;
-    }
-  }
-
-  getBasicInfo() {
-    // this.service
-    // .getBasicConsult(this.inputPelicula)
-    // .subscribe(
-    //   data => {
-    //     if (data['error']) {
-    //       console.log(data['error']);
-    //       this.showResult = false;
-    //     } else {
-    //       this.basicConsult = [data[0]];
-    //       console.log(this.basicConsult, "DATA", data);
-    //       this.showResult = true;
-    //     }
-    //   },
-    //   error => {
-    //     console.log(error);
-    //     this.showResult = false;
-    //   }
-    // );
-  }
 }
