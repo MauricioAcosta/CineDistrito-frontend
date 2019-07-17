@@ -17,4 +17,5 @@ export class QueryService {
     const httpOptions = { headers: myheaders };
     return this.httpClient.get<Personas>('http://localhost:8000/api/v1/usuarios/personas', httpOptions);
   }
+  public 
 }

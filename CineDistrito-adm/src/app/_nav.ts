@@ -41,11 +41,17 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Consulta General',
-    url: '/consults/basic-consult-peli',
+    url: '/menu/basic-consult-peli',
     icon: 'icon-magnifier'
   },
   {
+    name: 'Agregar Usuarios',
+    url: '/menu/add-user',
+    icon: 'cui-user'
+  },
+  {
     divider: true
-  }
+  },
+
 
 ];
