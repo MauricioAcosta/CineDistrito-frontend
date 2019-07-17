@@ -42,8 +42,8 @@ export const routes: Routes = [
         loadChildren: './pages/home/main-page.module#MainPageModule'
       },
       {
-        path: 'consults',
-        loadChildren: './pages/consults/consults.module#ConsultsModule'
+        path: 'menu',
+        loadChildren: './pages/menu/menu.module#MenuModule'
       }
     ]
   },

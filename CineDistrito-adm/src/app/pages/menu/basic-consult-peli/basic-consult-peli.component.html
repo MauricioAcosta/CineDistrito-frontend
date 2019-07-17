@@ -1,0 +1,38 @@
+<div class="animated fadeIn dura-5">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="text-center">Peliculas Registradas en el sistema</h4>
+      </div>
+      <div class="card-body">
+
+        <table class="table" style="width: 100%">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Pelicula</th>
+              <th scope="col">Duración</th>
+              <th scope="col">Sinapsis</th>
+              <th scope="col">Poster</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of peliculas.results'>
+              <td>
+                {{item.v_nombre}}
+              </td>
+              <td>
+                {{item.i_duracion}}
+              </td>
+              <td>
+                {{item.tx_sinapsis}}
+              </td>
+              <td>
+                <img class="img-thumbnail" src="{{item.v_foto}}" alt="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

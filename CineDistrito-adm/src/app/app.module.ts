@@ -40,7 +40,6 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { TokenInterceptor } from './services/token.interceptor';
 
 
 
@@ -67,16 +66,13 @@ import { TokenInterceptor } from './services/token.interceptor';
     HttpClientModule,
     FormsModule
   ],
-  providers: [{
+  providers: [
+    {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
 
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  }],
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
