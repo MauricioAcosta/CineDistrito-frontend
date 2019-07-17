@@ -5,74 +5,9 @@
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text">Nombres</span>
-          </div>
-          <input class="form-control" id="first-name" type="text" name="first-name">
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Apellidos</span>
-          </div>
-          <input class="form-control" id="last-name" type="text" name="last-name">
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Cedula</span>
-          </div>
-          <input class="form-control" id="cedula" type="text" name="cedula">
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Telefono</span>
-          </div>
-          <input class="form-control" id="telefono" type="text" name="telefono">
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Dirección</span>
-          </div>
-          <input class="form-control" id="telefono" type="text" name="telefono">
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
             <span class="input-group-text">Nombre de usuario</span>
           </div>
-          <input class="form-control" id="username" type="text" name="username">
+          <input class="form-control" id="username" type="text" name="username" [(ngModel)]="username">
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-user"></i>
@@ -85,7 +20,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Correo</span>
           </div>
-          <input class="form-control" id="email" type="email" name="email">
+          <input class="form-control" id="email" type="email" name="email" [(ngModel)]="email">
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-envelope"></i>
@@ -98,7 +33,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Contraseña</span>
           </div>
-          <input class="form-control" id="password" type="password" name="password">
+          <input class="form-control" id="password" type="password" name="password" [(ngModel)]="password">
           <div class="input-group-append">
             <span class="input-group-text">
               <i class="fa fa-asterisk"></i>
@@ -109,13 +44,78 @@
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
+            <span class="input-group-text">Nombres</span>
+          </div>
+          <input class="form-control" id="first-name" type="text" name="first-name" [(ngModel)]="firt_name">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Apellidos</span>
+          </div>
+          <input class="form-control" id="last-name" type="text" name="last-name" [(ngModel)]="last_name">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Cedula</span>
+          </div>
+          <input class="form-control" id="cedula" type="text" name="cedula" [(ngModel)]="pk_cedula">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Telefono</span>
+          </div>
+          <input class="form-control" id="telefono" type="text" name="telefono" [(ngModel)]="i_telefono">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Dirección</span>
+          </div>
+          <input class="form-control" id="direccion" type="text" name="direccion" [(ngModel)]="v_direccion">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
             <span class="input-group-text">Tipos de contrato</span>
           </div>
-          <select class="form-control" id="contratos" name="contratos">
+          <select class="form-control" id="contratos" name="contratos" [(ngModel)]="fk_numcontrato">
             <option value="0">Seleccione</option>
-            <option value="1">Contrato tipo 1</option>
-            <option value="2">Contrato tipo 2</option>
-            <option value="3">Contrato tipo 3</option>
+            <option value="{{item.id}}" *ngFor="let item of contratos.results" [ngValue]="item.id">
+              <div>{{item.v_tipocontrato}}</div>
+            </option>
           </select>
         </div>
       </div>
@@ -124,17 +124,17 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Descuento empleado</span>
           </div>
-          <input class="form-control" id="descuento" type="text" name="descuento">
+          <input class="form-control" id="descuento" type="text" name="descuento" [(ngModel)]="n_descuento">
           <div class="input-group-append">
             <span class="input-group-text">
-              <i class="fa fa-user"></i>
+              <i class="fa cui-info"></i>
             </span>
           </div>
         </div>
       </div>
       <br>
-      <div class="form-group form-actions">
-        <button class="btn btn-sm btn-primary" type="submit">Registrar</button>
+      <div class="text-center col-12">
+        <button (click)="CrearPersona()" class="btn btn-primary" type="submit">Registrar</button>
       </div>
     </form>
   </div>
