@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+//servicios
 import { AuthenticationService } from 'src/app/servicios/http/authentication.service';
+import { GestionarcredencialesService} from 'src/app/servicios/http/gestionarcredenciales.service';
 
 
 
@@ -16,9 +18,19 @@ export class LoginModalComponent implements OnInit {
   loginForm: FormGroup;
   error:string;
 
+  logged_in:boolean;
+
   constructor(public activeModal: NgbActiveModal,
               private authenticationService:AuthenticationService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private gestionarcredencialesService:GestionarcredencialesService) {
+                if (this.gestionarcredencialesService.obtenerUsuarioActual()){
+                  this.logged_in = true;
+                }else{
+                  this.logged_in = false;
+                }
+                
+               }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -38,13 +50,19 @@ export class LoginModalComponent implements OnInit {
     this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(
         response =>{
           console.log(response);
+          this.gestionarcredencialesService.guardarCredenciales(this.f.username.value,this.f.password.value);
           this.activeModal.close('Modal Closed');
         },
         error =>{
           console.log(error);
-          this.error="Datos incorrectos";
+          this.error="Los datos ingresados son incorrectos";
         }
       );
+  }
+
+  closeSesion(){
+    this.gestionarcredencialesService.borrarCredenciales();
+    this.activeModal.close('Modal Closed');
   }
 
 

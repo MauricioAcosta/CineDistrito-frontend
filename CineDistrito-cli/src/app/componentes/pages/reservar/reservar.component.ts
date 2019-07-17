@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
+
 //servicio
 import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/cartelera-reserva/compartir-dato-pelicula-cartelera-reserva.service';
 import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
-import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service'
+import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service';
+import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
+import { Sillas } from 'src/app/models/reserva/sillas';
 
 
 @Component({
@@ -23,19 +26,24 @@ export class ReservarComponent implements OnInit {
   public seatsState:String[];
   public multiplex_Lista:Multiplex[];
   public funcion_lista:Funcionsala[];
+  public silla_lista:Sillas;
   public multiplexSeleccionado:string;
+  public funcionSeleccionada:string;
+  public seatsReady:boolean;
+  public functionsReady:boolean;
+  public error_log_in:string;
+  public waitingResponse:boolean;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
-              private ObtenerListaFuncionesService:ObtenerListaFuncionesService) {
+              private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
+              private ObtenerListadoSillasService:ObtenerListadoSillasService) {
 
     this.seatsState = [];
-    let stateRand:Number;
-    for (let i=1; i < 61;i++)
-    {
-      stateRand = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-      this.seatsState.push(this.convertirNumeroAEstado(stateRand));
-    }
+    this.seatsReady = false;
+    this.functionsReady = false;
+    this.error_log_in = "";
+    this.waitingResponse = false;
   }
 
   ngOnInit() {
@@ -47,41 +55,29 @@ export class ReservarComponent implements OnInit {
     let s:String[]=[];
   }
 
-  convertirNumeroAEstado(numero:Number){
-    if (numero==1){
-      return "available";
-    }
-    else if (numero==2){
-      return "active";
-    }
-    else if (numero==3){
-      return "onprocess";
-    }
-    else if (numero==4){
-      return "reserved";
-    }
-    
-  }
-
-  onClickMe() {
-    alert(this.multiplexSeleccionado);
-    /*let stateRand:Number;
-    for (let i=1; i < 61;i++)
-    {
-      stateRand = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-      this.seatsState[i-1]=this.convertirNumeroAEstado(stateRand);
-    }*/
-  }
 
   onChangeMultiplex(){
+    this.functionsReady = false;
+    this.seatsReady= false;
+    this.waitingResponse = false;
     if (this.multiplexSeleccionado!="..."){
       //getting FuncionesSalas list -test
       this.ObtenerListaFuncionesService.obtenerFuncionesSalas(this.obtenerMultiplexPorNombre(this.multiplexSeleccionado),this.info_pelicula.id).subscribe(
-        data=>{ this.funcion_lista = data},
+        data=>{ this.funcion_lista = data; this.functionsReady = true;},
         error=>{console.error(error)}
       )
-    }else{
-      this.funcion_lista = [];
+    }
+  }
+
+  onChangeFunciones(){
+    this.error_log_in = "";
+    this.seatsReady= false;
+    this.waitingResponse = false;
+    if (this.funcionSeleccionada!="..."){
+      let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+      console.log('Funcion seleccionada Sala:'+this.funcion_lista[indice].fk_sala.id+' Funcion'+this.funcion_lista[indice].fk_funcion.id)
+      this.obtenerEstadoSillas(this.funcion_lista[indice].fk_sala.id,this.funcion_lista[indice].fk_funcion.id);
+      this.waitingResponse = true;
     }
   }
 
@@ -89,9 +85,34 @@ export class ReservarComponent implements OnInit {
     return this.multiplex_Lista.find(function(element){return element.v_nombre==nombre}).id;
   }
 
-  verificarestado_sillas(){
-
+  obtenerEstadoSillas(idSala,idFuncion){
+    this.ObtenerListadoSillasService.obtenerListado(idFuncion,idSala).subscribe(
+      data=>{
+        this.silla_lista = data;
+        this.actualizarEstadosSillas();
+      },
+      error=>{
+        this.error_log_in = "Debe ingresar sus credenciales antes de continuar";
+        this.waitingResponse = false;
+        console.error(error);
+      }
+    )
   }
+
+  actualizarEstadosSillas(){
+    for (let silla of this.silla_lista.disponible){
+      this.seatsState[+silla.i_orden] = "available";
+    }
+    for (let silla of this.silla_lista.proceso){
+      this.seatsState[+silla.i_orden]="onprocess";
+    }
+    for (let silla of this.silla_lista.reservadas){
+      this.seatsState[+silla.i_orden]="reserved";
+    }
+    this.seatsReady= true;
+    this.waitingResponse = false;
+  }
+  
 
   cambiarestadosilla_disponible(id){
     

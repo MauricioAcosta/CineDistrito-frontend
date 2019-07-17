@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 
 export class AuthenticationService {
 
+
   constructor(private http: HttpClient) { 
 
   }
@@ -22,4 +23,5 @@ export class AuthenticationService {
 
     return this.http.post<any>('http://127.0.0.1:8000/api/v1/usuarios/autenticar',{},httpOptions);
   }
+
 }

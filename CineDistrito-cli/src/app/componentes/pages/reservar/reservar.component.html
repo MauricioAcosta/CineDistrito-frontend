@@ -22,17 +22,22 @@
     <h3>Reservar</h3><hr/>
     <div id="Multiplex_formGroup" class="form-group">
       <label for="Multiplex">Selecciona un Multiplex</label>
-      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValue" id="Multiplex" class="form-control">
+      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
         <option>...</option>
         <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
       </select>
-      <label for="Multiplex">Selecciona una Función</label>
-      <select id="Funciones" class="form-control">
-        <option>...</option>
-        <option *ngFor="let funcion of this.funcion_lista">Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
-      </select>
+      <div *ngIf="functionsReady">
+        <label for="Multiplex">Selecciona una Función</label>
+        <select [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
+          <option>...</option>
+          <option *ngFor="let funcion of this.funcion_lista;let i = index">{{i+1}}: Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
+        </select>
     </div>
-    <div id="Asiento_formGroup" class="form-group">
+    </div>
+    <br>
+    <p style="color: red">{{error_log_in}}</p>
+    <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
+    <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
       <label for="Asiento">Selecciona un asiento </label>
 
       <!-- TABLA DE ASIENTOS-->
@@ -41,90 +46,90 @@
           <tbody>
               <tr>
                 <td>F</td>
-                <td><button id="60" [ngClass]="seatsState[59]" type='button' (click)="change()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="59" [ngClass]="seatsState[58]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="58" [ngClass]="seatsState[57]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="57" [ngClass]="seatsState[56]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="56" [ngClass]="seatsState[55]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="51" [ngClass]="seatsState[51]" type='button' (click)="change()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="52" [ngClass]="seatsState[52]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="53" [ngClass]="seatsState[53]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="54" [ngClass]="seatsState[54]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="55" [ngClass]="seatsState[55]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="55" [ngClass]="seatsState[54]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="54" [ngClass]="seatsState[53]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="53" [ngClass]="seatsState[52]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="52" [ngClass]="seatsState[51]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="51" [ngClass]="seatsState[50]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="56" [ngClass]="seatsState[56]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="57" [ngClass]="seatsState[57]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="58" [ngClass]="seatsState[58]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="59" [ngClass]="seatsState[59]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="60" [ngClass]="seatsState[60]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                 <td>E</td>
-                <td><button id="50" [ngClass]="seatsState[49]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="49" [ngClass]="seatsState[48]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="48" [ngClass]="seatsState[45]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="47" [ngClass]="seatsState[46]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="46" [ngClass]="seatsState[45]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="41" [ngClass]="seatsState[41]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="42" [ngClass]="seatsState[42]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="43" [ngClass]="seatsState[43]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="44" [ngClass]="seatsState[44]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="45" [ngClass]="seatsState[45]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="45" [ngClass]="seatsState[44]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="44" [ngClass]="seatsState[43]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="43" [ngClass]="seatsState[42]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="42" [ngClass]="seatsState[41]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="41" [ngClass]="seatsState[40]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="46" [ngClass]="seatsState[46]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="47" [ngClass]="seatsState[47]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="48" [ngClass]="seatsState[48]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="49" [ngClass]="seatsState[49]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="50" [ngClass]="seatsState[50]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                   <td></td>
               </tr>
               <tr>
                 <td>D</td>
-                <td><button id="40" [ngClass]="seatsState[39]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="39" [ngClass]="seatsState[38]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="38" [ngClass]="seatsState[37]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="37" [ngClass]="seatsState[36]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="36" [ngClass]="seatsState[35]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="31" [ngClass]="seatsState[31]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="32" [ngClass]="seatsState[32]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="33" [ngClass]="seatsState[33]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="34" [ngClass]="seatsState[34]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="35" [ngClass]="seatsState[35]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="35" [ngClass]="seatsState[34]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="34" [ngClass]="seatsState[33]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="33" [ngClass]="seatsState[32]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="32" [ngClass]="seatsState[31]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="31" [ngClass]="seatsState[30]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="36" [ngClass]="seatsState[36]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="37" [ngClass]="seatsState[37]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="38" [ngClass]="seatsState[38]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="39" [ngClass]="seatsState[39]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="40" [ngClass]="seatsState[40]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                 <td>C</td>
-                <td><button id="30" [ngClass]="seatsState[29]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="29" [ngClass]="seatsState[28]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="28" [ngClass]="seatsState[27]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="27" [ngClass]="seatsState[26]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="26" [ngClass]="seatsState[25]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="21" [ngClass]="seatsState[21]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="22" [ngClass]="seatsState[22]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="23" [ngClass]="seatsState[23]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="24" [ngClass]="seatsState[24]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="25" [ngClass]="seatsState[25]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="25" [ngClass]="seatsState[24]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="24" [ngClass]="seatsState[23]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="23" [ngClass]="seatsState[22]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="22" [ngClass]="seatsState[21]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="21" [ngClass]="seatsState[20]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="26" [ngClass]="seatsState[26]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="27" [ngClass]="seatsState[27]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="28" [ngClass]="seatsState[28]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="29" [ngClass]="seatsState[29]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="30" [ngClass]="seatsState[30]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                 <td>B</td>
-                <td><button id="20" [ngClass]="seatsState[19]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="19" [ngClass]="seatsState[18]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="18" [ngClass]="seatsState[17]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="17" [ngClass]="seatsState[16]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="16" [ngClass]="seatsState[15]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="11" [ngClass]="seatsState[11]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="12" [ngClass]="seatsState[12]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="13" [ngClass]="seatsState[13]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="14" [ngClass]="seatsState[14]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="15" [ngClass]="seatsState[15]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="15" [ngClass]="seatsState[14]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="14" [ngClass]="seatsState[13]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="13" [ngClass]="seatsState[12]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="12" [ngClass]="seatsState[11]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="11" [ngClass]="seatsState[10]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="16" [ngClass]="seatsState[16]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="17" [ngClass]="seatsState[17]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="18" [ngClass]="seatsState[18]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="19" [ngClass]="seatsState[19]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="20" [ngClass]="seatsState[20]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                 <td>A</td>
-                <td><button id="10" [ngClass]="seatsState[9]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="8" [ngClass]="seatsState[8]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="7" [ngClass]="seatsState[7]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="6" [ngClass]="seatsState[6]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="9" [ngClass]="seatsState[5]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="1" [ngClass]="seatsState[1]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="2" [ngClass]="seatsState[2]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="3" [ngClass]="seatsState[3]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="4" [ngClass]="seatsState[4]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="5" [ngClass]="seatsState[5]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
                 <td></td>
-                <td><button id="5" [ngClass]="seatsState[4]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="4" [ngClass]="seatsState[3]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="3" [ngClass]="seatsState[2]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="2" [ngClass]="seatsState[1]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
-                <td><button id="1" [ngClass]="seatsState[0]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="6" [ngClass]="seatsState[6]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="7" [ngClass]="seatsState[7]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="8" [ngClass]="seatsState[8]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="9" [ngClass]="seatsState[9]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
+                <td><button id="10" [ngClass]="seatsState[10]" type='button' (click)="onClickMe()"><i class="fas fa-chair"></i></button></td>
               </tr>
               <tr>
                 <td></td>
