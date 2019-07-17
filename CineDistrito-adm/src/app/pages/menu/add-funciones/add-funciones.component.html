@@ -1,3 +1,73 @@
-<p>
-  add-funciones works!
-</p>
+<div class="card">
+  <div class="card-header">Agregar Funciones</div>
+  <div class="card-body">
+    <form action="" method="post">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Estado de la función</span>
+          </div>
+          <select class="form-control" id="v_estado" name="v_estado" [(ngModel)]="v_estado">
+            <option value="activa" [ngValue]="v_estado">Activa</option>
+            <option value="Desactiva" [ngValue]="v_estado">Desactiva</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Día de proyección </span>
+          </div>
+          <input class="form-control" id="d_proyeccion" type="date" name="d_proyeccion" [(ngModel)]="d_proyeccion">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Peliculas de la función</span>
+            </div>
+            <select class="form-control" id="fk_pelicula" name="fk_pelicula" [(ngModel)]="fk_pelicula">
+              <option value="{{item.id}}" *ngFor="let item of peliculas.results" [ngValue]="item.id">
+                <div>{{item.v_nombre}}</div>
+              </option>
+            </select>
+          </div>
+        </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Hora de inicio</span>
+          </div>
+          <input class="form-control" id="t_inicioproyeccion" type="time" name="t_inicioproyeccion" [(ngModel)]="t_inicioproyeccion">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Hora de finalización</span>
+          </div>
+          <input class="form-control" id="t_finproyeccion" type="time" name="t_finproyeccion" [(ngModel)]="t_finproyeccion">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fa cui-info"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center col-12">
+        <button (click)="CrearFuncion()" class="btn btn-primary" type="submit">Registrar Función</button>
+      </div>
+    </form>
+  </div>
+</div>

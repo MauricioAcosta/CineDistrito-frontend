@@ -13,6 +13,7 @@ export class BasicConsultPeliComponent implements OnInit {
   showResult = true;
   inputPelicula: string;
   peliculas: Peliculas;
+  funciones: Funciones
 
   // constructor(private service: QueryService) { }
   constructor(private service: QueryService) { }
@@ -20,12 +21,20 @@ export class BasicConsultPeliComponent implements OnInit {
     this.service.GetPeliculas().subscribe(
       response => {
         this.peliculas = response
-        console.log('this.peliculas: ', this.peliculas);
+        //console.log('this.peliculas: ', this.peliculas);
       },
       error => {
         console.log(error);
       }
     );
+    this.service.GetFuncion().subscribe(
+      response => {
+        this.funciones = response
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }
