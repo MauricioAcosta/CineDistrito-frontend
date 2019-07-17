@@ -104,10 +104,10 @@ export class ReservarComponent implements OnInit {
       this.seatsState[+silla.i_orden] = "available";
     }
     for (let silla of this.silla_lista.proceso){
-      this.seatsState[+silla.i_orden]="onprocess";
+      this.seatsState[+silla.fk_silla.i_orden]="onprocess";
     }
     for (let silla of this.silla_lista.reservadas){
-      this.seatsState[+silla.i_orden]="reserved";
+      this.seatsState[+silla.fk_silla.i_orden]="reserved";
     }
     this.seatsReady= true;
     this.waitingResponse = false;

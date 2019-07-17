@@ -20,6 +20,5 @@ export class CambiarEstadoEnProcesoService {
 
     this.httpClient.post<any>('http://localhost:8000/api/v1/reservas/disponibilidad-sillas/',body,{headers:myheaders});
 
-    
   }
 }

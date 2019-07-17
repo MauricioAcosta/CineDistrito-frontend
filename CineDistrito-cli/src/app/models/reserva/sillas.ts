@@ -1,9 +1,15 @@
 export interface Sillas {
     fk_funcion_sala:Number;
-    reservadas:Silla[];
-    proceso:Silla[];
+    reservadas:SillaP[];
+    proceso:SillaP[];
     disponible:Silla[];
-    reserva:Reserva[];
+    reserva:Reserva;
+}
+
+
+export interface SillaP{
+    v_estado:string;
+    fk_silla:Silla;
 }
 
 export interface Silla{
