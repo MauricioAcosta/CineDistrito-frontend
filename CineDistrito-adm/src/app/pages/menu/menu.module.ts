@@ -9,6 +9,7 @@ import { MenuRoutingModule } from './menu-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
+import { AddSalaComponent } from './add-sala/add-sala.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
   declarations: [
     BasicConsultPeliComponent,
     AddUserComponent,
-    AddFuncionesComponent
+    AddFuncionesComponent,
+    AddSalaComponent
 
   ]
 })

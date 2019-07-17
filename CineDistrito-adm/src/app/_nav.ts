@@ -55,6 +55,11 @@ export const navItems: NavData[] = [
     icon: 'cui-task'
   },
   {
+    name: 'Agregar Sala a función',
+    url: '/menu/add-sala',
+    icon: 'cui-task'
+  },
+  {
     divider: true
   },
 
