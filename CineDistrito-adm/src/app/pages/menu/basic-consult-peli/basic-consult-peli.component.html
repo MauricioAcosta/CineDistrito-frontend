@@ -1,5 +1,5 @@
-<div class="animated fadeIn dura-5">
-  <div class="col-12">
+<div class=" row animated fadeIn dura-5">
+  <div class="col-6">
     <div class="card">
       <div class="card-header">
         <h4 class="text-center">Peliculas Registradas en el sistema</h4>
@@ -28,6 +28,48 @@
               </td>
               <td>
                 <img class="img-thumbnail" src="{{item.v_foto}}" alt="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="text-center">Funciones Registradas en el sistema</h4>
+      </div>
+      <div class="card-body">
+
+        <table class="table" style="width: 100%">
+          <thead>
+            <tr>
+              <th scope="col">Estado de la función</th>
+              <th scope="col">Día de la proyección</th>
+              <th scope="col">Nombre de la pelicula</th>
+              <th scope="col">Inicio de la proyección</th>
+              <th scope="col">Fin de la proyección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of funciones.results'>
+              <td>
+                {{item.v_estado}}
+              </td>
+              <td>
+                {{item.d_proyeccion}}
+              </td>
+              <td>
+                <div>
+                  {{item.fk_pelicula.v_nombre}}
+                </div>
+              </td>
+              <td>
+                {{item.t_inicioproyeccion}}
+              </td>
+              <td>
+                {{item.t_finproyeccion}}
               </td>
             </tr>
           </tbody>

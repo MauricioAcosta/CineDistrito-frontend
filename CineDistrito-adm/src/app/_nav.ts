@@ -50,6 +50,11 @@ export const navItems: NavData[] = [
     icon: 'cui-user'
   },
   {
+    name: 'Agregar Funciones',
+    url: '/menu/add-funciones',
+    icon: 'cui-task'
+  },
+  {
     divider: true
   },
 

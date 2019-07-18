@@ -8,6 +8,7 @@ import { BasicConsultPeliComponent } from './basic-consult-peli/basic-consult-pe
 import { MenuRoutingModule } from './menu-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { AddUserComponent } from './add-user/add-user.component';
   ],
   declarations: [
     BasicConsultPeliComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddFuncionesComponent
 
   ]
 })

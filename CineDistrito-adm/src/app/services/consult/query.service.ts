@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Personas } from 'src/app/models/personas';
 import { Peliculas } from 'src/app/models/peliculas';
 import { Contratos } from 'src/app/models/contratos';
+import { Time } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,23 @@ export class QueryService {
           console.log("Error feo", error);
 
         }
+
+      );
+
+  }
+  public GetFuncion() {
+    return this.httpClient.get<Funciones>('http://localhost:8000/api/v1/funciones/funciones/')
+  }
+  public PostCreateFuntion(v_estado: String, d_proyeccion: Date, fk_pelicula: Number, t_inicioproyeccion: Time, t_finproyeccion: Time) {
+    this.httpClient.post("http://localhost:8000/api/v1/funciones/funciones/",
+      {
+        "v_estado": v_estado,
+        "d_proyeccion": d_proyeccion,
+        "fk_pelicula": fk_pelicula,
+        "t_inicioproyeccion": t_inicioproyeccion,
+        "t_finproyeccion": t_finproyeccion
+      }).subscribe(
+        data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); }
 
       );
 
