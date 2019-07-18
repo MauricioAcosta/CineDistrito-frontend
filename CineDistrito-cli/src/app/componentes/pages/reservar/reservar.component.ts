@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 //servicio
@@ -39,7 +40,8 @@ export class ReservarComponent implements OnInit {
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
               private ObtenerListadoSillasService:ObtenerListadoSillasService,
-              private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService) {
+              private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService,
+              private Router:Router) {
 
     this.seatsState = [];
     this.seatsReady = false;
@@ -106,7 +108,9 @@ export class ReservarComponent implements OnInit {
       this.seatsState[+silla.i_orden] = "available";
     }
     for (let silla of this.silla_lista.proceso){
-      this.seatsState[+silla.fk_silla.i_orden]="onprocess";
+      if (this.seatsState[+silla.fk_silla.i_orden]!="active"){
+        this.seatsState[+silla.fk_silla.i_orden]="onprocess";
+      }
     }
     for (let silla of this.silla_lista.reservadas){
       this.seatsState[+silla.fk_silla.i_orden]="reserved";
@@ -124,12 +128,27 @@ export class ReservarComponent implements OnInit {
       alert('La sillas que has seleccionado ya se encuentra en proceso');
     }else{
       let indice = +this.funcionSeleccionada.split(':')[0] - 1;
-      let idSilla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla}).id;
+      let idSilla:any;
+      if (this.seatsState[i_numsilla]=="available"){
+        idSilla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla}).id;
+      }else if(this.seatsState[i_numsilla]=="active"){
+        idSilla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla.id;
+      }
       console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
       this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
         data=>{
-                console.log(data)
-                this.onChangeFunciones();
+                console.log(data);
+                if (data=="El tiempo para terminar la reserva ha finalizado"){
+                  alert(data);
+                  this.Router.navigateByUrl('/cartelera_actual');
+                }else{
+                  if (this.seatsState[i_numsilla]=="active"){
+                    this.seatsState[i_numsilla]="";
+                  }else{
+                    this.seatsState[i_numsilla]="active"
+                  }
+                  this.onChangeFunciones();
+                }
               },
         error=>{console.error(error)}
       );
