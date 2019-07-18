@@ -6,6 +6,7 @@ import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/ca
 import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
 import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service';
 import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
+import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service'
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
@@ -37,7 +38,8 @@ export class ReservarComponent implements OnInit {
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
-              private ObtenerListadoSillasService:ObtenerListadoSillasService) {
+              private ObtenerListadoSillasService:ObtenerListadoSillasService,
+              private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService) {
 
     this.seatsState = [];
     this.seatsReady = false;
@@ -114,21 +116,27 @@ export class ReservarComponent implements OnInit {
   }
   
 
-  cambiarestadosilla_disponible(id){
-    
+
+  seleccionarSilla(i_numsilla){
+    if (this.seatsState[i_numsilla]=="reserved"){
+      alert('La sillas que has seleccionado ya se encuentra reservada');
+    }else if (this.seatsState[i_numsilla]=="onprocess"){
+      alert('La sillas que has seleccionado ya se encuentra en proceso');
+    }else{
+      let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+      let idSilla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla}).id;
+      console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
+      this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
+        data=>{
+                console.log(data)
+                this.onChangeFunciones();
+              },
+        error=>{console.error(error)}
+      );
+    }
+  
   }
 
-  cambiarestadosilla_nodisponible(id){
-
-  }
-
-  cambiarestadosilla_enproceso(id){
-
-  }
-
-  cambiarestadosilla_seleccionada(id){
-
-  }
 
 
 }
