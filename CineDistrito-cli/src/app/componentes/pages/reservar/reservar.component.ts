@@ -7,13 +7,16 @@ import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/ca
 import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
 import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service';
 import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
-import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service'
+import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service';
+import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
+
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
 import { Sillas } from 'src/app/models/reserva/sillas';
+import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
 
 
 @Component({
@@ -41,13 +44,17 @@ export class ReservarComponent implements OnInit {
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
               private ObtenerListadoSillasService:ObtenerListadoSillasService,
               private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService,
-              private Router:Router) {
+              private Router:Router,
+              private ObtenerListaSnacksService:ObtenerListaSnacksService) {
 
     this.seatsState = [];
     this.seatsReady = false;
     this.functionsReady = false;
     this.error_log_in = "";
     this.waitingResponse = false;
+    //snacks
+    this.reservaReady= false;
+    this.snack_Lista = [];
   }
 
   ngOnInit() {
@@ -104,6 +111,7 @@ export class ReservarComponent implements OnInit {
   }
 
   actualizarEstadosSillas(){
+
     for (let silla of this.silla_lista.disponible){
       this.seatsState[+silla.i_orden] = "available";
     }
@@ -115,6 +123,13 @@ export class ReservarComponent implements OnInit {
     for (let silla of this.silla_lista.reservadas){
       this.seatsState[+silla.fk_silla.i_orden]="reserved";
     }
+
+    //verify if there's an active chair to continue with the reserve process
+    if (this.seatsState.find(function(element){return element=="active"})){
+      this.reservaReady = true;
+      this.generarListaSnacks(null);
+    }
+
     this.seatsReady= true;
     this.waitingResponse = false;
   }
@@ -122,6 +137,7 @@ export class ReservarComponent implements OnInit {
 
 
   seleccionarSilla(i_numsilla){
+    this.reservaReady = false;
     if (this.seatsState[i_numsilla]=="reserved"){
       alert('La sillas que has seleccionado ya se encuentra reservada');
     }else if (this.seatsState[i_numsilla]=="onprocess"){
@@ -157,5 +173,35 @@ export class ReservarComponent implements OnInit {
   }
 
 
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE SNACKS
+  /////////////////////////////////////////////////////////////////////////////
 
+  reservaReady:boolean;
+  snack_Lista:Snack[];
+
+  veridseleccionados(){
+    for (let snack of this.snack_Lista){
+      if(snack.selected){
+        console.log('Seleccionado -> '+snack.v_nombre);
+      }
+    }
+  }
+
+  generarListaSnacks(next){
+    this.ObtenerListaSnacksService.obtenerSnacks(next).subscribe(
+      data=>{
+        for (let snack of data.results){
+          snack.selected = false;
+          this.snack_Lista.push(snack);
+        }
+        if (data.next!=null){
+          this.generarListaSnacks(data.next);
+        }
+      },
+      error=>{
+        console.error(error);
+      }
+    );
+  }
 }

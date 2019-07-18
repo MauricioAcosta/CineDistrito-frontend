@@ -10,149 +10,160 @@
         </div>
     </div>
 </div>
-<form>
-    <h3>Reserva tu boleta para {{info_pelicula.v_nombre}}</h3>
-    <br>
-    <img src="{{info_pelicula.v_foto}}" class="img-fluid">
-    <br>
-    <h3>Sinopsis</h3><hr/>
-    <p id="plot">{{info_pelicula.tx_sinapsis}}</p>
-    <h3>Duración</h3><hr/>
-    <p id="plot">{{info_pelicula.i_duracion}}</p>
-    <h3>Reservar</h3><hr/>
-    <div id="Multiplex_formGroup" class="form-group">
-      <label for="Multiplex">Selecciona un Multiplex</label>
-      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
+<div id="seleccionReserva">
+  <h3>Reserva tu boleta para {{info_pelicula.v_nombre}}</h3>
+  <br>
+  <img src="{{info_pelicula.v_foto}}" class="img-fluid">
+  <br>
+  <h3>Sinopsis</h3><hr/>
+  <p id="plot">{{info_pelicula.tx_sinapsis}}</p>
+  <h3>Duración</h3><hr/>
+  <p id="plot">{{info_pelicula.i_duracion}} Minutos</p>
+  <h3>Reservar</h3><hr/>
+  <div id="Multiplex_formGroup" class="form-group">
+    <label for="Multiplex">Selecciona un Multiplex</label>
+    <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
+      <option>...</option>
+      <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
+    </select>
+    <div *ngIf="functionsReady" style="margin-top:2em;">
+      <label for="Multiplex">Selecciona una Función</label>
+      <select [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
         <option>...</option>
-        <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
+        <option *ngFor="let funcion of this.funcion_lista;let i = index">{{i+1}}: Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
       </select>
-      <div *ngIf="functionsReady">
-        <label for="Multiplex">Selecciona una Función</label>
-        <select [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
-          <option>...</option>
-          <option *ngFor="let funcion of this.funcion_lista;let i = index">{{i+1}}: Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
-        </select>
+  </div>
+  </div>
+  <br>
+  <p style="color: red">{{error_log_in}}</p>
+  <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
+  <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
+    <label for="Asiento">Selecciona un asiento </label>
+
+    <!-- TABLA DE ASIENTOS -->
+      <div class="row">
+      <table class="table borderless">
+        <tbody>
+            <tr>
+              <td>F</td>
+              <td><button id="51" [ngClass]="seatsState[51]" type='button' (click)="seleccionarSilla(51)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="52" [ngClass]="seatsState[52]" type='button' (click)="seleccionarSilla(52)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="53" [ngClass]="seatsState[53]" type='button' (click)="seleccionarSilla(53)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="54" [ngClass]="seatsState[54]" type='button' (click)="seleccionarSilla(54)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="55" [ngClass]="seatsState[55]" type='button' (click)="seleccionarSilla(55)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="56" [ngClass]="seatsState[56]" type='button' (click)="seleccionarSilla(56)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="57" [ngClass]="seatsState[57]" type='button' (click)="seleccionarSilla(57)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="58" [ngClass]="seatsState[58]" type='button' (click)="seleccionarSilla(58)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="59" [ngClass]="seatsState[59]" type='button' (click)="seleccionarSilla(59)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="60" [ngClass]="seatsState[60]" type='button' (click)="seleccionarSilla(60)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+              <td>E</td>
+              <td><button id="41" [ngClass]="seatsState[41]" type='button' (click)="seleccionarSilla(41)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="42" [ngClass]="seatsState[42]" type='button' (click)="seleccionarSilla(42)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="43" [ngClass]="seatsState[43]" type='button' (click)="seleccionarSilla(43)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="44" [ngClass]="seatsState[44]" type='button' (click)="seleccionarSilla(44)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="45" [ngClass]="seatsState[45]" type='button' (click)="seleccionarSilla(45)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="46" [ngClass]="seatsState[46]" type='button' (click)="seleccionarSilla(46)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="47" [ngClass]="seatsState[47]" type='button' (click)="seleccionarSilla(47)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="48" [ngClass]="seatsState[48]" type='button' (click)="seleccionarSilla(48)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="49" [ngClass]="seatsState[49]" type='button' (click)="seleccionarSilla(49)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="50" [ngClass]="seatsState[50]" type='button' (click)="seleccionarSilla(5)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td><button id="31" [ngClass]="seatsState[31]" type='button' (click)="seleccionarSilla(31)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="32" [ngClass]="seatsState[32]" type='button' (click)="seleccionarSilla(32)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="33" [ngClass]="seatsState[33]" type='button' (click)="seleccionarSilla(33)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="34" [ngClass]="seatsState[34]" type='button' (click)="seleccionarSilla(34)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="35" [ngClass]="seatsState[35]" type='button' (click)="seleccionarSilla(35)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="36" [ngClass]="seatsState[36]" type='button' (click)="seleccionarSilla(36)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="37" [ngClass]="seatsState[37]" type='button' (click)="seleccionarSilla(37)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="38" [ngClass]="seatsState[38]" type='button' (click)="seleccionarSilla(38)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="39" [ngClass]="seatsState[39]" type='button' (click)="seleccionarSilla(39)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="40" [ngClass]="seatsState[40]" type='button' (click)="seleccionarSilla(40)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td><button id="21" [ngClass]="seatsState[21]" type='button' (click)="seleccionarSilla(21)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="22" [ngClass]="seatsState[22]" type='button' (click)="seleccionarSilla(22)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="23" [ngClass]="seatsState[23]" type='button' (click)="seleccionarSilla(23)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="24" [ngClass]="seatsState[24]" type='button' (click)="seleccionarSilla(24)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="25" [ngClass]="seatsState[25]" type='button' (click)="seleccionarSilla(25)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="26" [ngClass]="seatsState[26]" type='button' (click)="seleccionarSilla(26)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="27" [ngClass]="seatsState[27]" type='button' (click)="seleccionarSilla(27)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="28" [ngClass]="seatsState[28]" type='button' (click)="seleccionarSilla(28)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="29" [ngClass]="seatsState[29]" type='button' (click)="seleccionarSilla(29)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="30" [ngClass]="seatsState[30]" type='button' (click)="seleccionarSilla(30)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td><button id="11" [ngClass]="seatsState[11]" type='button' (click)="seleccionarSilla(11)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="12" [ngClass]="seatsState[12]" type='button' (click)="seleccionarSilla(12)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="13" [ngClass]="seatsState[13]" type='button' (click)="seleccionarSilla(13)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="14" [ngClass]="seatsState[14]" type='button' (click)="seleccionarSilla(14)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="15" [ngClass]="seatsState[15]" type='button' (click)="seleccionarSilla(15)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="16" [ngClass]="seatsState[16]" type='button' (click)="seleccionarSilla(16)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="17" [ngClass]="seatsState[17]" type='button' (click)="seleccionarSilla(17)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="18" [ngClass]="seatsState[18]" type='button' (click)="seleccionarSilla(18)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="19" [ngClass]="seatsState[19]" type='button' (click)="seleccionarSilla(19)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="20" [ngClass]="seatsState[20]" type='button' (click)="seleccionarSilla(20)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td><button id="1" [ngClass]="seatsState[1]" type='button' (click)="seleccionarSilla(1)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="2" [ngClass]="seatsState[2]" type='button' (click)="seleccionarSilla(2)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="3" [ngClass]="seatsState[3]" type='button' (click)="seleccionarSilla(3)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="4" [ngClass]="seatsState[4]" type='button' (click)="seleccionarSilla(4)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="5" [ngClass]="seatsState[5]" type='button' (click)="seleccionarSilla(5)"><i class="fas fa-chair"></i></button></td>
+              <td></td>
+              <td><button id="6" [ngClass]="seatsState[6]" type='button' (click)="seleccionarSilla(6)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="7" [ngClass]="seatsState[7]" type='button' (click)="seleccionarSilla(7)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="8" [ngClass]="seatsState[8]" type='button' (click)="seleccionarSilla(8)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="9" [ngClass]="seatsState[9]" type='button' (click)="seleccionarSilla(9)"><i class="fas fa-chair"></i></button></td>
+              <td><button id="10" [ngClass]="seatsState[10]" type='button' (click)="seleccionarSilla(10)"><i class="fas fa-chair"></i></button></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td></td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              <td>10</td>
+            </tr>
+        </tbody>
+      </table>
     </div>
+    <!---->
+  </div>
+  
+  <div *ngIf="reservaReady">
+    <hr/>
+    <p style="size:1.5em;">¿Quieres comprar algún aperitivo para acompañar tu pelicula?</p>
+    <br>
+    <div *ngFor="let snack of this.snack_Lista" style="margin-left: 2em;">
+      <div class="custom-checkbox">
+        <input [(ngModel)]="snack.selected" name="selectedValueC" type="checkbox" class="custom-control-input" id="s{{snack.id}}">
+        <label class="custom-control-label" for="s{{snack.id}}">{{snack.v_nombre}} Precio ${{snack.i_precio}}</label>
+      </div>
     </div>
     <br>
-    <p style="color: red">{{error_log_in}}</p>
-    <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
-    <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
-      <label for="Asiento">Selecciona un asiento </label>
-
-      <!-- TABLA DE ASIENTOS -->
-        <div class="row">
-        <table class="table borderless">
-          <tbody>
-              <tr>
-                <td>F</td>
-                <td><button id="51" [ngClass]="seatsState[51]" type='button' (click)="seleccionarSilla(51)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="52" [ngClass]="seatsState[52]" type='button' (click)="seleccionarSilla(52)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="53" [ngClass]="seatsState[53]" type='button' (click)="seleccionarSilla(53)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="54" [ngClass]="seatsState[54]" type='button' (click)="seleccionarSilla(54)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="55" [ngClass]="seatsState[55]" type='button' (click)="seleccionarSilla(55)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="56" [ngClass]="seatsState[56]" type='button' (click)="seleccionarSilla(56)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="57" [ngClass]="seatsState[57]" type='button' (click)="seleccionarSilla(57)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="58" [ngClass]="seatsState[58]" type='button' (click)="seleccionarSilla(58)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="59" [ngClass]="seatsState[59]" type='button' (click)="seleccionarSilla(59)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="60" [ngClass]="seatsState[60]" type='button' (click)="seleccionarSilla(60)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                <td>E</td>
-                <td><button id="41" [ngClass]="seatsState[41]" type='button' (click)="seleccionarSilla(41)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="42" [ngClass]="seatsState[42]" type='button' (click)="seleccionarSilla(42)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="43" [ngClass]="seatsState[43]" type='button' (click)="seleccionarSilla(43)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="44" [ngClass]="seatsState[44]" type='button' (click)="seleccionarSilla(44)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="45" [ngClass]="seatsState[45]" type='button' (click)="seleccionarSilla(45)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="46" [ngClass]="seatsState[46]" type='button' (click)="seleccionarSilla(46)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="47" [ngClass]="seatsState[47]" type='button' (click)="seleccionarSilla(47)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="48" [ngClass]="seatsState[48]" type='button' (click)="seleccionarSilla(48)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="49" [ngClass]="seatsState[49]" type='button' (click)="seleccionarSilla(49)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="50" [ngClass]="seatsState[50]" type='button' (click)="seleccionarSilla(5)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                  <td></td>
-              </tr>
-              <tr>
-                <td>D</td>
-                <td><button id="31" [ngClass]="seatsState[31]" type='button' (click)="seleccionarSilla(31)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="32" [ngClass]="seatsState[32]" type='button' (click)="seleccionarSilla(32)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="33" [ngClass]="seatsState[33]" type='button' (click)="seleccionarSilla(33)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="34" [ngClass]="seatsState[34]" type='button' (click)="seleccionarSilla(34)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="35" [ngClass]="seatsState[35]" type='button' (click)="seleccionarSilla(35)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="36" [ngClass]="seatsState[36]" type='button' (click)="seleccionarSilla(36)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="37" [ngClass]="seatsState[37]" type='button' (click)="seleccionarSilla(37)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="38" [ngClass]="seatsState[38]" type='button' (click)="seleccionarSilla(38)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="39" [ngClass]="seatsState[39]" type='button' (click)="seleccionarSilla(39)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="40" [ngClass]="seatsState[40]" type='button' (click)="seleccionarSilla(40)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                <td>C</td>
-                <td><button id="21" [ngClass]="seatsState[21]" type='button' (click)="seleccionarSilla(21)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="22" [ngClass]="seatsState[22]" type='button' (click)="seleccionarSilla(22)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="23" [ngClass]="seatsState[23]" type='button' (click)="seleccionarSilla(23)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="24" [ngClass]="seatsState[24]" type='button' (click)="seleccionarSilla(24)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="25" [ngClass]="seatsState[25]" type='button' (click)="seleccionarSilla(25)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="26" [ngClass]="seatsState[26]" type='button' (click)="seleccionarSilla(26)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="27" [ngClass]="seatsState[27]" type='button' (click)="seleccionarSilla(27)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="28" [ngClass]="seatsState[28]" type='button' (click)="seleccionarSilla(28)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="29" [ngClass]="seatsState[29]" type='button' (click)="seleccionarSilla(29)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="30" [ngClass]="seatsState[30]" type='button' (click)="seleccionarSilla(30)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td><button id="11" [ngClass]="seatsState[11]" type='button' (click)="seleccionarSilla(11)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="12" [ngClass]="seatsState[12]" type='button' (click)="seleccionarSilla(12)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="13" [ngClass]="seatsState[13]" type='button' (click)="seleccionarSilla(13)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="14" [ngClass]="seatsState[14]" type='button' (click)="seleccionarSilla(14)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="15" [ngClass]="seatsState[15]" type='button' (click)="seleccionarSilla(15)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="16" [ngClass]="seatsState[16]" type='button' (click)="seleccionarSilla(16)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="17" [ngClass]="seatsState[17]" type='button' (click)="seleccionarSilla(17)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="18" [ngClass]="seatsState[18]" type='button' (click)="seleccionarSilla(18)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="19" [ngClass]="seatsState[19]" type='button' (click)="seleccionarSilla(19)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="20" [ngClass]="seatsState[20]" type='button' (click)="seleccionarSilla(20)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                <td>A</td>
-                <td><button id="1" [ngClass]="seatsState[1]" type='button' (click)="seleccionarSilla(1)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="2" [ngClass]="seatsState[2]" type='button' (click)="seleccionarSilla(2)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="3" [ngClass]="seatsState[3]" type='button' (click)="seleccionarSilla(3)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="4" [ngClass]="seatsState[4]" type='button' (click)="seleccionarSilla(4)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="5" [ngClass]="seatsState[5]" type='button' (click)="seleccionarSilla(5)"><i class="fas fa-chair"></i></button></td>
-                <td></td>
-                <td><button id="6" [ngClass]="seatsState[6]" type='button' (click)="seleccionarSilla(6)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="7" [ngClass]="seatsState[7]" type='button' (click)="seleccionarSilla(7)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="8" [ngClass]="seatsState[8]" type='button' (click)="seleccionarSilla(8)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="9" [ngClass]="seatsState[9]" type='button' (click)="seleccionarSilla(9)"><i class="fas fa-chair"></i></button></td>
-                <td><button id="10" [ngClass]="seatsState[10]" type='button' (click)="seleccionarSilla(10)"><i class="fas fa-chair"></i></button></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td></td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-      <!---->
-
-
-      
-    </div>
     <p>Costo : {{precio}}</p>
-    <button type="submit" class="btn btn-danger">Reservar</button>
-  </form>
+    <button (click)="generarListaSnacks(null)" class="btn btn-danger">Reservar</button>
+    <button (click)="veridseleccionados()" class="btn btn-danger">Reservar</button>
+  </div>
+</div>
