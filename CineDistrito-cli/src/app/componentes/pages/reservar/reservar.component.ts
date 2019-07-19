@@ -9,6 +9,7 @@ import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-li
 import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
 import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service';
 import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
+import {EnviarDatosSnacksService} from 'src/app/servicios/reserva/enviar-datos-snacks.service';
 
 
 //modelo
@@ -38,6 +39,7 @@ export class ReservarComponent implements OnInit {
   public functionsReady:boolean;
   public error_log_in:string;
   public waitingResponse:boolean;
+  public onSillas:boolean;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
@@ -45,8 +47,9 @@ export class ReservarComponent implements OnInit {
               private ObtenerListadoSillasService:ObtenerListadoSillasService,
               private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService,
               private Router:Router,
-              private ObtenerListaSnacksService:ObtenerListaSnacksService) {
-
+              private ObtenerListaSnacksService:ObtenerListaSnacksService,
+              private EnviarDatosSnacksService:EnviarDatosSnacksService) {
+    this.onSillas = true;
     this.seatsState = [];
     this.seatsReady = false;
     this.functionsReady = false;
@@ -54,7 +57,10 @@ export class ReservarComponent implements OnInit {
     this.waitingResponse = false;
     //snacks
     this.reservaReady= false;
+    this.snackReady = false
     this.snack_Lista = [];
+    this.waitingResponseS = false;
+    this.facturaReady = false;
   }
 
   ngOnInit() {
@@ -179,6 +185,15 @@ export class ReservarComponent implements OnInit {
 
   reservaReady:boolean;
   snack_Lista:Snack[];
+  snackReady:boolean;
+  waitingResponseS:boolean;
+
+
+  continuarSnacks(){
+    this.snackReady = true;
+    this.reservaReady = false;
+    this.onSillas = false;
+  }
 
   veridseleccionados(){
     for (let snack of this.snack_Lista){
@@ -193,6 +208,7 @@ export class ReservarComponent implements OnInit {
       data=>{
         for (let snack of data.results){
           snack.selected = false;
+          snack.cantidad = 1;
           this.snack_Lista.push(snack);
         }
         if (data.next!=null){
@@ -203,5 +219,40 @@ export class ReservarComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  enviarDatosProductos(){
+    this.waitingResponseS = true;
+    let selectedSnack : Snack[] = [];
+    for (let item of this.snack_Lista){
+      if (item.selected){
+        selectedSnack.push(item);
+      }
+    }
+    for (let item of selectedSnack){
+      console.log('Se envio -> '+item.v_nombre+' cantidad->'+item.cantidad);
+      this.EnviarDatosSnacksService.enviarDatosSnack(item.cantidad,this.silla_lista.reserva.id,item.id).subscribe(
+        data=>{
+          console.log(data);
+          if(item == selectedSnack[selectedSnack.length-1]){
+            this.waitingResponseS = false;
+            this.snackReady = false;
+          }
+        },
+        error=>{
+          console.error(error);
+        }
+      )
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE FACTURA
+  /////////////////////////////////////////////////////////////////////////////
+
+  private facturaReady:boolean;
+
+  obtenerDatosFactura(fk_reserva){
+    
   }
 }

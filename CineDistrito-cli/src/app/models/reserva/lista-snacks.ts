@@ -13,4 +13,5 @@ export interface Snack{
     i_precio:Number;
     i_puntosofrecidos:Number;
     selected?:boolean;
+    cantidad?:Number;
 }
