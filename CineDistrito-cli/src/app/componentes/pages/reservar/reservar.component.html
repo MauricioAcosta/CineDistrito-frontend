@@ -170,4 +170,14 @@
     <button *ngIf="!waitingResponseS" (click)="enviarDatosProductos()" class="btn btn-danger">Continuar</button>
     <img *ngIf="waitingResponseS" src="assets/img/esperar.gif" style="margin-left: 2pm">
   </div>
+
+  <div *ngIf="facturaReady">
+    <p>Esta es tu factura...</p>
+    <hr/>
+    <p>Costo total por sillas Generales      : {{factura.precio_general}}</p>
+    <p>Costo total por sillas Preferenciales : {{factura.precio_preferencial}}</p>
+    <p>Costo total por snacks                : {{factura.precio_snacks}}</p>
+    <p>IVA                                   : {{factura.iva}}</p>
+    <p>Total Factura                         : {{factura.total}}</p>
+  </div>
 </div>

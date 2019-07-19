@@ -10,14 +10,16 @@ import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-lis
 import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service';
 import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
 import {EnviarDatosSnacksService} from 'src/app/servicios/reserva/enviar-datos-snacks.service';
+import {ObtenerFacturaService} from 'src/app/servicios/reserva/obtener-factura.service'
 
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
-import { Sillas } from 'src/app/models/reserva/sillas';
+import { Sillas, Silla } from 'src/app/models/reserva/sillas';
 import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
+import { Factura } from 'src/app/models/reserva/factura';
 
 
 @Component({
@@ -28,18 +30,18 @@ import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
 
 export class ReservarComponent implements OnInit {
 
-  public info_pelicula:Fkpelicula;
-  public seatsState:String[];
-  public multiplex_Lista:Multiplex[];
-  public funcion_lista:Funcionsala[];
-  public silla_lista:Sillas;
-  public multiplexSeleccionado:string;
-  public funcionSeleccionada:string;
-  public seatsReady:boolean;
-  public functionsReady:boolean;
-  public error_log_in:string;
-  public waitingResponse:boolean;
-  public onSillas:boolean;
+  private info_pelicula:Fkpelicula;
+  private seatsState:String[];
+  private multiplex_Lista:Multiplex[];
+  private funcion_lista:Funcionsala[];
+  private silla_lista:Sillas;
+  private multiplexSeleccionado:string;
+  private funcionSeleccionada:string;
+  private seatsReady:boolean;
+  private functionsReady:boolean;
+  private error_log_in:string;
+  private waitingResponse:boolean;
+  private onSillas:boolean;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
@@ -48,7 +50,9 @@ export class ReservarComponent implements OnInit {
               private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService,
               private Router:Router,
               private ObtenerListaSnacksService:ObtenerListaSnacksService,
-              private EnviarDatosSnacksService:EnviarDatosSnacksService) {
+              private EnviarDatosSnacksService:EnviarDatosSnacksService,
+              private ObtenerFacturaService:ObtenerFacturaService) {
+
     this.onSillas = true;
     this.seatsState = [];
     this.seatsReady = false;
@@ -60,7 +64,11 @@ export class ReservarComponent implements OnInit {
     this.snackReady = false
     this.snack_Lista = [];
     this.waitingResponseS = false;
+
+    //factura
     this.facturaReady = false;
+    this.factura = null;
+    
   }
 
   ngOnInit() {
@@ -147,15 +155,21 @@ export class ReservarComponent implements OnInit {
     if (this.seatsState[i_numsilla]=="reserved"){
       alert('La sillas que has seleccionado ya se encuentra reservada');
     }else if (this.seatsState[i_numsilla]=="onprocess"){
-      alert('La sillas que has seleccionado ya se encuentra en proceso');
+      alert('Se actualizaran las sillas en busca de disponibles');
+      this.onChangeFunciones();
     }else{
       let indice = +this.funcionSeleccionada.split(':')[0] - 1;
-      let idSilla:any;
-      if (this.seatsState[i_numsilla]=="available"){
-        idSilla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla}).id;
-      }else if(this.seatsState[i_numsilla]=="active"){
-        idSilla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla.id;
+
+      let Silla:Silla=null;
+
+      Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
+
+      if(Silla == null){
+        Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
       }
+
+      let idSilla = Silla.id;
+
       console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
       this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
         data=>{
@@ -163,14 +177,12 @@ export class ReservarComponent implements OnInit {
                 if (data=="El tiempo para terminar la reserva ha finalizado"){
                   alert(data);
                   this.Router.navigateByUrl('/cartelera_actual');
-                }else{
-                  if (this.seatsState[i_numsilla]=="active"){
-                    this.seatsState[i_numsilla]="";
-                  }else{
-                    this.seatsState[i_numsilla]="active"
-                  }
-                  this.onChangeFunciones();
+                }else if(data=="La silla se ha bloqueado"){
+                  this.seatsState[i_numsilla]="active"
+                }else if(data=="La silla se ha liberado"){
+                  this.seatsState[i_numsilla]="";
                 }
+                this.onChangeFunciones();
               },
         error=>{console.error(error)}
       );
@@ -237,6 +249,8 @@ export class ReservarComponent implements OnInit {
           if(item == selectedSnack[selectedSnack.length-1]){
             this.waitingResponseS = false;
             this.snackReady = false;
+            this.facturaReady = true;
+            this.obtenerDatosFactura(this.silla_lista.reserva.id);
           }
         },
         error=>{
@@ -251,8 +265,16 @@ export class ReservarComponent implements OnInit {
   /////////////////////////////////////////////////////////////////////////////
 
   private facturaReady:boolean;
+  private factura:Factura;
 
   obtenerDatosFactura(fk_reserva){
-    
+    this.ObtenerFacturaService.obtenerFactura(fk_reserva).subscribe(
+      data=>{
+        this.factura = data;
+      },
+      error=>{
+        console.error(error);
+      }
+    )
   }
 }
