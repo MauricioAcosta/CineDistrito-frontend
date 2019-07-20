@@ -29,7 +29,7 @@ export class AddSalaComponent implements OnInit {
     this.service.GetSalas().subscribe(
       response => {
         this.salas = response
-        console.log("this.salas: ", this.salas);
+        //console.log("this.salas: ", this.salas);
 
       },
       error => {

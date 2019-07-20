@@ -18,7 +18,7 @@ export class MainPageComponent implements OnInit {
     this.service.GetPersonas().subscribe(
       response => {
         this.personas = response
-        console.log('this.personas: ', this.personas.results[0].last_name);
+        //console.log('this.personas: ', this.personas.results[0].last_name);
 
       },
       error => {
