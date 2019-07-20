@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 //servicio
@@ -6,12 +7,19 @@ import {CompartirDatoPeliculaCarteleraReservaService} from 'src/app/servicios/ca
 import {ObtenerListaMultiplexService} from 'src/app/servicios/reserva/obtener-lista-multiplex.service';
 import {ObtenerListaFuncionesService} from 'src/app/servicios/reserva/obtener-lista-funciones.service';
 import {ObtenerListadoSillasService} from 'src/app/servicios/reserva/obtener-listado-sillas.service';
+import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-estado-en-proceso.service';
+import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
+import {EnviarDatosSnacksService} from 'src/app/servicios/reserva/enviar-datos-snacks.service';
+import {ObtenerFacturaService} from 'src/app/servicios/reserva/obtener-factura.service'
+
 
 //modelo
 import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
-import { Sillas } from 'src/app/models/reserva/sillas';
+import { Sillas, Silla } from 'src/app/models/reserva/sillas';
+import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
+import { Factura } from 'src/app/models/reserva/factura';
 
 
 @Component({
@@ -22,28 +30,45 @@ import { Sillas } from 'src/app/models/reserva/sillas';
 
 export class ReservarComponent implements OnInit {
 
-  public info_pelicula:Fkpelicula;
-  public seatsState:String[];
-  public multiplex_Lista:Multiplex[];
-  public funcion_lista:Funcionsala[];
-  public silla_lista:Sillas;
-  public multiplexSeleccionado:string;
-  public funcionSeleccionada:string;
-  public seatsReady:boolean;
-  public functionsReady:boolean;
-  public error_log_in:string;
-  public waitingResponse:boolean;
+  private info_pelicula:Fkpelicula;
+  private seatsState:String[];
+  private multiplex_Lista:Multiplex[];
+  private funcion_lista:Funcionsala[];
+  private silla_lista:Sillas;
+  private multiplexSeleccionado:string;
+  private funcionSeleccionada:string;
+  private seatsReady:boolean;
+  private functionsReady:boolean;
+  private error_log_in:string;
+  private waitingResponse:boolean;
+  private onSillas:boolean;
 
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
-              private ObtenerListadoSillasService:ObtenerListadoSillasService) {
+              private ObtenerListadoSillasService:ObtenerListadoSillasService,
+              private CambiarEstadoEnProcesoService:CambiarEstadoEnProcesoService,
+              private Router:Router,
+              private ObtenerListaSnacksService:ObtenerListaSnacksService,
+              private EnviarDatosSnacksService:EnviarDatosSnacksService,
+              private ObtenerFacturaService:ObtenerFacturaService) {
 
+    this.onSillas = true;
     this.seatsState = [];
     this.seatsReady = false;
     this.functionsReady = false;
     this.error_log_in = "";
     this.waitingResponse = false;
+    //snacks
+    this.reservaReady= false;
+    this.snackReady = false
+    this.snack_Lista = [];
+    this.waitingResponseS = false;
+
+    //factura
+    this.facturaReady = false;
+    this.factura = null;
+    
   }
 
   ngOnInit() {
@@ -100,35 +125,156 @@ export class ReservarComponent implements OnInit {
   }
 
   actualizarEstadosSillas(){
+
     for (let silla of this.silla_lista.disponible){
       this.seatsState[+silla.i_orden] = "available";
     }
     for (let silla of this.silla_lista.proceso){
-      this.seatsState[+silla.i_orden]="onprocess";
+      if (this.seatsState[+silla.fk_silla.i_orden]!="active"){
+        this.seatsState[+silla.fk_silla.i_orden]="onprocess";
+      }
     }
     for (let silla of this.silla_lista.reservadas){
-      this.seatsState[+silla.i_orden]="reserved";
+      this.seatsState[+silla.fk_silla.i_orden]="reserved";
     }
+
+    //verify if there's an active chair to continue with the reserve process
+    if (this.seatsState.find(function(element){return element=="active"})){
+      this.reservaReady = true;
+      this.generarListaSnacks(null);
+    }
+
     this.seatsReady= true;
     this.waitingResponse = false;
   }
   
 
-  cambiarestadosilla_disponible(id){
-    
+
+  seleccionarSilla(i_numsilla){
+    this.reservaReady = false;
+    if (this.seatsState[i_numsilla]=="reserved"){
+      alert('La sillas que has seleccionado ya se encuentra reservada');
+    }else if (this.seatsState[i_numsilla]=="onprocess"){
+      alert('Se actualizaran las sillas en busca de disponibles');
+      this.onChangeFunciones();
+    }else{
+      let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+
+      let Silla:Silla=null;
+
+      Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
+
+      if(Silla == null){
+        Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
+      }
+
+      let idSilla = Silla.id;
+
+      console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
+      this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
+        data=>{
+                console.log(data);
+                if (data=="El tiempo para terminar la reserva ha finalizado"){
+                  alert(data);
+                  this.Router.navigateByUrl('/cartelera_actual');
+                }else if(data=="La silla se ha bloqueado"){
+                  this.seatsState[i_numsilla]="active"
+                }else if(data=="La silla se ha liberado"){
+                  this.seatsState[i_numsilla]="";
+                }
+                this.onChangeFunciones();
+              },
+        error=>{console.error(error)}
+      );
+    }
+  
   }
 
-  cambiarestadosilla_nodisponible(id){
 
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE SNACKS
+  /////////////////////////////////////////////////////////////////////////////
+
+  reservaReady:boolean;
+  snack_Lista:Snack[];
+  snackReady:boolean;
+  waitingResponseS:boolean;
+
+
+  continuarSnacks(){
+    this.snackReady = true;
+    this.reservaReady = false;
+    this.onSillas = false;
   }
 
-  cambiarestadosilla_enproceso(id){
-
+  veridseleccionados(){
+    for (let snack of this.snack_Lista){
+      if(snack.selected){
+        console.log('Seleccionado -> '+snack.v_nombre);
+      }
+    }
   }
 
-  cambiarestadosilla_seleccionada(id){
-
+  generarListaSnacks(next){
+    this.ObtenerListaSnacksService.obtenerSnacks(next).subscribe(
+      data=>{
+        for (let snack of data.results){
+          snack.selected = false;
+          snack.cantidad = 1;
+          this.snack_Lista.push(snack);
+        }
+        if (data.next!=null){
+          this.generarListaSnacks(data.next);
+        }
+      },
+      error=>{
+        console.error(error);
+      }
+    );
   }
 
+  enviarDatosProductos(){
+    this.waitingResponseS = true;
+    let selectedSnack : Snack[] = [];
+    for (let item of this.snack_Lista){
+      if (item.selected){
+        selectedSnack.push(item);
+      }
+    }
+    for (let item of selectedSnack){
+      console.log('Se envio -> '+item.v_nombre+' cantidad->'+item.cantidad);
+      this.EnviarDatosSnacksService.enviarDatosSnack(item.cantidad,this.silla_lista.reserva.id,item.id).subscribe(
+        data=>{
+          console.log(data);
+          if(item == selectedSnack[selectedSnack.length-1]){
+            this.waitingResponseS = false;
+            this.snackReady = false;
+            this.facturaReady = true;
+            this.obtenerDatosFactura(this.silla_lista.reserva.id);
+          }
+        },
+        error=>{
+          console.error(error);
+        }
+      )
+    }
+  }
 
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE FACTURA
+  /////////////////////////////////////////////////////////////////////////////
+
+  private facturaReady:boolean;
+  private factura:Factura;
+
+  obtenerDatosFactura(fk_reserva){
+    this.ObtenerFacturaService.obtenerFactura(fk_reserva).subscribe(
+      data=>{
+        this.factura = data;
+      },
+      error=>{
+        console.error(error);
+      }
+    )
+  }
 }
