@@ -5,6 +5,7 @@ import { BasicConsultPeliComponent } from './basic-consult-peli/basic-consult-pe
 import { AddUserComponent } from './add-user/add-user.component'
 import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
 import { AddSalaComponent } from './add-sala/add-sala.component';
+import { SnacksComponent } from './snacks/snacks.component';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +43,13 @@ const routes: Routes = [
         component: AddSalaComponent,
         data: {
           title: 'Agregar Sala a función'
+        }
+      },
+      {
+        path: 'add-snacks',
+        component: SnacksComponent,
+        data: {
+          title: 'Agregar Productos (Snacks)'
         }
       }
     ]

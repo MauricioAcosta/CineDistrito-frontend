@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
 import { AddSalaComponent } from './add-sala/add-sala.component';
+import { SnacksComponent } from './snacks/snacks.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AddSalaComponent } from './add-sala/add-sala.component';
     BasicConsultPeliComponent,
     AddUserComponent,
     AddFuncionesComponent,
-    AddSalaComponent
+    AddSalaComponent,
+    SnacksComponent
 
   ]
 })

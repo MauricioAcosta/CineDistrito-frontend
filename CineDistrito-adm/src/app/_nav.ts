@@ -60,6 +60,11 @@ export const navItems: NavData[] = [
     icon: 'cui-task'
   },
   {
+    name: 'Agregar Productos (Snacks)',
+    url: '/menu/add-snacks',
+    icon: 'icon-magnifier-add'
+  },
+  {
     divider: true
   },
 
