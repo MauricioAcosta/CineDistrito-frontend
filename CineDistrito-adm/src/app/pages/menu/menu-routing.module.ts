@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BasicConsultPeliComponent } from './basic-consult-peli/basic-consult-peli.component';
 import { AddUserComponent } from './add-user/add-user.component'
 import { AddFuncionesComponent } from './add-funciones/add-funciones.component';
+import { AddSalaComponent } from './add-sala/add-sala.component';
+import { SnacksComponent } from './snacks/snacks.component';
 const routes: Routes = [
   {
     path: '',
@@ -35,6 +37,20 @@ const routes: Routes = [
         data: {
           title: 'Agregar Funciones'
         }
+      },
+      {
+        path: 'add-sala',
+        component: AddSalaComponent,
+        data: {
+          title: 'Agregar Sala a función'
+        }
+      },
+      {
+        path: 'add-snacks',
+        component: SnacksComponent,
+        data: {
+          title: 'Agregar Productos (Snacks)'
+        }
       }
     ]
   }
@@ -44,4 +60,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MenuRoutingModule {}
+export class MenuRoutingModule { }

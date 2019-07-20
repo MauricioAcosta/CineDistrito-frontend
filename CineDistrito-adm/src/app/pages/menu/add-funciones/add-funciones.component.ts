@@ -21,7 +21,7 @@ export class AddFuncionesComponent implements OnInit {
     this.service.GetPeliculas().subscribe(
       response => {
         this.peliculas = response
-        console.log("this.peliculas: ", this.peliculas);
+        //console.log("this.peliculas: ", this.peliculas);
 
       },
       error => {
