@@ -4,6 +4,8 @@ import { Personas } from 'src/app/models/personas';
 import { Peliculas } from 'src/app/models/peliculas';
 import { Contratos } from 'src/app/models/contratos';
 import { Time } from '@angular/common';
+import { Salas } from 'src/app/models/salas';
+import { Multiplex } from 'src/app/models/multiplex';
 
 @Injectable({
   providedIn: 'root'
@@ -66,9 +68,17 @@ export class QueryService {
         "t_inicioproyeccion": t_inicioproyeccion,
         "t_finproyeccion": t_finproyeccion
       }).subscribe(
-        data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); }
-
-      );
-
+        data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); });
+  }
+  public GetSalas() {
+    return this.httpClient.get<Multiplex>('http://localhost:8000/api/v1/multiplex/multiplex/')
+  }
+  public PostCreateSala(fk_funcion: Number, fk_sala: Number) {
+    this.httpClient.post("http://localhost:8000/api/v1/funciones/funciones-sala/",
+      {
+        "fk_funcion": fk_funcion,
+        "fk_sala": fk_sala
+      }).subscribe(
+        data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); });
   }
 }
