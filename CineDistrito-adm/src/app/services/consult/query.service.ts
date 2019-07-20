@@ -81,4 +81,16 @@ export class QueryService {
       }).subscribe(
         data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); });
   }
+  public PostCreateSnacks(v_tipo: String, v_nombre: String, tx_descripcion: String, i_precio: Number, i_puntosofrecidos: Number) {
+    this.httpClient.post("http://127.0.0.1:8000/api/v1/snacks/snacks/",
+      {
+        "v_tipo": v_tipo,
+        "v_nombre": v_nombre,
+        "tx_descripcion": tx_descripcion,
+        "i_precio": i_precio,
+        "i_puntosofrecidos": i_puntosofrecidos
+      }
+    ).subscribe(
+      data => { console.log("POST Request is successful ", data); }, error => { console.log("Error feo", error); });
+  }
 }
