@@ -37,7 +37,6 @@
     </div>
     <br>
     <p style="color: red">{{error_log_in}}</p>
-    <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
     <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
       <label for="Asiento">Selecciona un asiento </label>
 
@@ -166,9 +165,7 @@
       </div>
     </div>
     <br>
-    <p>Costo : {{precio}}</p>
     <button *ngIf="!waitingResponseS" (click)="enviarDatosProductos()" class="btn btn-danger">Continuar</button>
-    <img *ngIf="waitingResponseS" src="assets/img/esperar.gif" style="margin-left: 2pm">
   </div>
 
   <div *ngIf="facturaReady">
@@ -179,5 +176,9 @@
     <p>Costo total por snacks                : {{factura.precio_snacks}}</p>
     <p>IVA                                   : {{factura.iva}}</p>
     <p>Total Factura                         : {{factura.total}}</p>
+    <p>Puntos acumulados                     : {{factura.puntos_acumulados}}</p>
   </div>
+  <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
 </div>
+
+<p *ngIf="onTimeLeft" style="color: orange">Tiempo límite de reserva  {{minutes}}:{{seconds}}</p>

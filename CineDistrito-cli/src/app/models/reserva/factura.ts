@@ -5,4 +5,5 @@ export interface Factura {
     subtotal:Number;
     iva:Number;
     total:Number;
+    puntos_acumulados:Number;
 }

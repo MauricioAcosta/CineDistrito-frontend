@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { timer, Observable, Subscription } from 'rxjs';
 
 
 //servicio
@@ -18,7 +19,7 @@ import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
 import { Sillas, Silla } from 'src/app/models/reserva/sillas';
-import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
+import { Snack } from 'src/app/models/reserva/lista-snacks';
 import { Factura } from 'src/app/models/reserva/factura';
 
 
@@ -27,6 +28,8 @@ import { Factura } from 'src/app/models/reserva/factura';
   templateUrl: './reservar.component.html',
   styleUrls: ['./reservar.component.scss']
 })
+
+
 
 export class ReservarComponent implements OnInit {
 
@@ -42,7 +45,16 @@ export class ReservarComponent implements OnInit {
   private error_log_in:string;
   private waitingResponse:boolean;
   private onSillas:boolean;
+  
 
+  //timer
+  private timeLeft:number;
+  private clocksub:Subscription;
+  private onTimeLeft:boolean;
+  private minutes:number;
+  private seconds:number;  
+
+  
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
@@ -68,16 +80,37 @@ export class ReservarComponent implements OnInit {
     //factura
     this.facturaReady = false;
     this.factura = null;
-    
+
+    //tiempo de reserva
+    this.timeLeft = 290;
   }
 
   ngOnInit() {
+    this.clocksub = null;
     this.info_pelicula = this.CompartirDatoPeliculaCarteleraReservaService.getPelicula();
     //getting Multiplex list
     this.ObtenerListaMultiplexService.obtenerMultiplexLista(this.info_pelicula.id).subscribe
     (data=>{this.multiplex_Lista = data},error => {console.error(error)});
 
     let s:String[]=[];
+  }
+
+  //tiempo restante
+  calcularReloj(){
+    this.timeLeft = this.timeLeft -1;
+    if(this.timeLeft<=0){
+      alert('Su tiempo de reserva expiró')
+      this.Router.navigateByUrl('/cartelera_actual');
+    }else{
+      this.minutes = parseInt(''+(this.timeLeft/60));
+      this.seconds = parseInt(''+(((+this.timeLeft)/60-this.minutes)*60));
+    }
+  }
+
+  ngOnDestroy(){
+    if(this.clocksub){
+      this.clocksub.unsubscribe();
+    }
   }
 
 
@@ -95,6 +128,11 @@ export class ReservarComponent implements OnInit {
   }
 
   onChangeFunciones(){
+    if(!this.clocksub){
+      this.clocksub = timer(0,1000).subscribe(val=>{this.calcularReloj()});
+      this.onTimeLeft = true;
+
+    }
     this.error_log_in = "";
     this.seatsReady= false;
     this.waitingResponse = false;
@@ -235,6 +273,7 @@ export class ReservarComponent implements OnInit {
 
   enviarDatosProductos(){
     this.waitingResponseS = true;
+    this.waitingResponse = true;
     let selectedSnack : Snack[] = [];
     for (let item of this.snack_Lista){
       if (item.selected){
@@ -248,8 +287,8 @@ export class ReservarComponent implements OnInit {
           console.log(data);
           if(item == selectedSnack[selectedSnack.length-1]){
             this.waitingResponseS = false;
+            this.waitingResponse = false;
             this.snackReady = false;
-            this.facturaReady = true;
             this.obtenerDatosFactura(this.silla_lista.reserva.id);
           }
         },
@@ -268,9 +307,12 @@ export class ReservarComponent implements OnInit {
   private factura:Factura;
 
   obtenerDatosFactura(fk_reserva){
+    this.waitingResponse = true;
     this.ObtenerFacturaService.obtenerFactura(fk_reserva).subscribe(
       data=>{
         this.factura = data;
+        this.facturaReady = true;
+        this.waitingResponse = false;
       },
       error=>{
         console.error(error);
