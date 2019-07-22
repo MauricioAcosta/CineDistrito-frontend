@@ -45,6 +45,7 @@ export class ReservarComponent implements OnInit {
   private error_log_in:string;
   private waitingResponse:boolean;
   private onSillas:boolean;
+  private block_FM:boolean;
   
 
   //timer
@@ -71,6 +72,9 @@ export class ReservarComponent implements OnInit {
     this.functionsReady = false;
     this.error_log_in = "";
     this.waitingResponse = false;
+    this.block_FM = false;
+    this.funcionSeleccionada = "";
+
     //snacks
     this.reservaReady= false;
     this.snackReady = false
@@ -108,6 +112,7 @@ export class ReservarComponent implements OnInit {
   }
 
   ngOnDestroy(){
+    this.liberarSillas();
     if(this.clocksub){
       this.clocksub.unsubscribe();
     }
@@ -131,8 +136,8 @@ export class ReservarComponent implements OnInit {
     if(!this.clocksub){
       this.clocksub = timer(0,1000).subscribe(val=>{this.calcularReloj()});
       this.onTimeLeft = true;
-
     }
+    this.block_FM = true;
     this.error_log_in = "";
     this.seatsReady= false;
     this.waitingResponse = false;
@@ -179,7 +184,10 @@ export class ReservarComponent implements OnInit {
     //verify if there's an active chair to continue with the reserve process
     if (this.seatsState.find(function(element){return element=="active"})){
       this.reservaReady = true;
+      this.block_FM = true;
       this.generarListaSnacks(null);
+    }else{
+      this.block_FM = false;
     }
 
     this.seatsReady= true;
@@ -198,15 +206,7 @@ export class ReservarComponent implements OnInit {
     }else{
       let indice = +this.funcionSeleccionada.split(':')[0] - 1;
 
-      let Silla:Silla=null;
-
-      Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
-
-      if(Silla == null){
-        Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
-      }
-
-      let idSilla = Silla.id;
+      let idSilla = this.obtenerSillaId(i_numsilla);
 
       console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
       this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
@@ -226,6 +226,23 @@ export class ReservarComponent implements OnInit {
       );
     }
   
+  }
+
+  obtenerSillaId(i_numsilla){
+
+    let Silla:Silla=null;
+
+    Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
+
+    if(Silla == null){
+      Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
+    }
+
+    if(Silla == null){
+      Silla = this.silla_lista.reservadas.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
+    }
+
+    return Silla.id;
   }
 
 
@@ -296,6 +313,24 @@ export class ReservarComponent implements OnInit {
           console.error(error);
         }
       )
+    }
+  }
+
+  liberarSillas(){
+    let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+    for (let seat in this.seatsState){
+      if (this.seatsState[seat]=='active'){
+        this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(
+          this.obtenerSillaId(seat),
+          this.funcion_lista[indice].id,
+          this.silla_lista.reserva.id,
+          this.funcion_lista[indice].fk_funcion.id,
+          this.funcion_lista[indice].fk_sala.id
+        ).subscribe(
+          data=>{console.log(seat+' id '+this.obtenerSillaId(seat)+' '+data)},
+          error=>{console.error(error)}
+        )
+      }
     }
   }
 
