@@ -12,6 +12,7 @@ import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-e
 import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
 import {EnviarDatosSnacksService} from 'src/app/servicios/reserva/enviar-datos-snacks.service';
 import {ObtenerFacturaService} from 'src/app/servicios/reserva/obtener-factura.service'
+import {GenerarPagoService} from 'src/app/servicios/reserva/generar-pago.service'
 
 
 //modelo
@@ -64,7 +65,8 @@ export class ReservarComponent implements OnInit {
               private Router:Router,
               private ObtenerListaSnacksService:ObtenerListaSnacksService,
               private EnviarDatosSnacksService:EnviarDatosSnacksService,
-              private ObtenerFacturaService:ObtenerFacturaService) {
+              private ObtenerFacturaService:ObtenerFacturaService,
+              private GenerarPagoService:GenerarPagoService) {
 
     this.onSillas = true;
     this.seatsState = [];
@@ -292,8 +294,6 @@ export class ReservarComponent implements OnInit {
   }
 
   enviarDatosProductos(){
-    this.waitingResponseS = true;
-    this.waitingResponse = true;
     let selectedSnack : Snack[] = [];
     for (let item of this.snack_Lista){
       if (item.selected){
@@ -301,6 +301,8 @@ export class ReservarComponent implements OnInit {
       }
     }
     for (let item of selectedSnack){
+      this.waitingResponseS = true;
+      this.waitingResponse = true;
       console.log('Se envio -> '+item.v_nombre+' cantidad->'+item.cantidad);
       this.EnviarDatosSnacksService.enviarDatosSnack(item.cantidad,this.silla_lista.reserva.id,item.id).subscribe(
         data=>{
@@ -316,6 +318,12 @@ export class ReservarComponent implements OnInit {
           console.error(error);
         }
       )
+    }
+    if(selectedSnack.length==0){
+      this.waitingResponseS = false;
+      this.waitingResponse = false;
+      this.snackReady = false;
+      this.obtenerDatosFactura(this.silla_lista.reserva.id);
     }
   }
 
@@ -363,5 +371,14 @@ export class ReservarComponent implements OnInit {
   //SECCION DE PAGO
   /////////////////////////////////////////////////////////////////////////////
   private metodoPagoSeleccionado:string;
+
+  generarPago(){
+    if(this.metodoPagoSeleccionado!=""){
+      this.GenerarPagoService.enviarPago(this.metodoPagoSeleccionado, this.silla_lista.reserva.id).subscribe(
+        data=>{console.log(data)},
+        error=>{console.error(error)}        
+      )
+    }
+  }
 
 }

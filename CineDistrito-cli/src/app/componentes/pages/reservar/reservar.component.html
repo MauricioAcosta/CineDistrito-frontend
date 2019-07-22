@@ -151,8 +151,8 @@
   </div>
 
   <button *ngIf="reservaReady" (click)="continuarSnacks()" class="btn btn-danger">Continuar</button>
-  
-  <div *ngIf="snackReady">
+  <!---->
+  <div *ngIf="snackReady" >
     <hr/>
     <p style="size:1.5em;">¿Quieres comprar algún aperitivo para acompañar tu pelicula?</p>
     <br>
@@ -177,11 +177,13 @@
     <p>Total Factura                         : {{factura.total}}</p>
     <p>Puntos acumulados                     : {{factura.puntos_acumulados}}</p>
     <br>
+    <p>Selecciona el medio de pago: </p>
     <select [(ngModel)]="metodoPagoSeleccionado" name="selectedValuePa" class="form-control">
       <option>Efectivo</option>
-      <option>Tarjeta de Credito</option>
+      <option>Tarjeta de Credito/Debito</option>
     </select>
-
+    <br>
+    <button (click)="generarPago()" class="btn btn-danger">Reservar</button>
   </div>
   <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
 </div>
