@@ -87,6 +87,9 @@ export class ReservarComponent implements OnInit {
 
     //tiempo de reserva
     this.timeLeft = 290;
+
+    //pago
+    this.metodoPagoSeleccionado = "";
   }
 
   ngOnInit() {
@@ -354,4 +357,11 @@ export class ReservarComponent implements OnInit {
       }
     )
   }
+
+
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE PAGO
+  /////////////////////////////////////////////////////////////////////////////
+  private metodoPagoSeleccionado:string;
+
 }

@@ -20,7 +20,7 @@ export class CambiarEstadoEnProcesoService {
 
     console.log("Cuerpo cambiarEstadoEnproceso -> "+body);
 
-    return this.httpClient.post<any>('http://localhost:8000/api/v1/reservas/disponibilidad-sillas/'+idfuncion+'/'+idsala+'/',body,{headers:myheaders});
+    return this.httpClient.post<any>('http://127.0.0.1:8000/api/v1/reservas/disponibilidad-sillas/'+idfuncion+'/'+idsala+'/',body,{headers:myheaders});
 
   }
 }

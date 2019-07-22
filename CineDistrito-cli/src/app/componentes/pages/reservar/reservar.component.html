@@ -176,6 +176,12 @@
     <p>IVA                                   : {{factura.iva}}</p>
     <p>Total Factura                         : {{factura.total}}</p>
     <p>Puntos acumulados                     : {{factura.puntos_acumulados}}</p>
+    <br>
+    <select [(ngModel)]="metodoPagoSeleccionado" name="selectedValuePa" class="form-control">
+      <option>Efectivo</option>
+      <option>Tarjeta de Credito</option>
+    </select>
+
   </div>
   <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
 </div>
