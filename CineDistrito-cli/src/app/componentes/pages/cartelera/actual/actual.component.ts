@@ -102,10 +102,15 @@ export class ActualComponent implements OnInit {
   onChangeMultiplex(){
     if(this.multiplexSeleccionado!="..."){
       this.cargarPeliculasCM(this.getSelectedMultiplexId());
+    }else{
+      this.lista_peliculas_CM =[];
+      this.lista_peliculas_registradasCM = [];
     }
   }
 
   cargarPeliculasCM(idCinema){
+    this.lista_peliculas_CM =[];
+    this.lista_peliculas_registradasCM = [];
     this.ObtenerPeliculasCinemarkService.obtenerPeliculas(idCinema).subscribe(
       data=>{
         for (let item of data){
