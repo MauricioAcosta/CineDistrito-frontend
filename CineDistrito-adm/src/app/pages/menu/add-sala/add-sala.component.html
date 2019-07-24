@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">Agregar una función a una sala</div>
-  <div class="card-body" *ngIf="peliculas && salas">
+  <div class="card-body" *ngIf="funciones && salas">
     <form action="" method="post">
       <div class="form-group">
         <div class="input-group">
@@ -8,8 +8,8 @@
             <span class="input-group-text">Funciones de peliculas</span>
           </div>
           <select class="form-control" id="fk_pelicula" name="fk_pelicula" [(ngModel)]="fk_funcion">
-            <option value="{{item.id}}" *ngFor="let item of peliculas.results" [ngValue]="item.id">
-              <div>{{item.v_nombre}}</div>
+            <option value="{{item.id}}" *ngFor="let item of funciones.results; let i = index" [ngValue]="item.id">
+              <div>{{item.id}}: {{item.fk_pelicula.v_nombre}} </div>
             </option>
           </select>
         </div>
@@ -20,8 +20,8 @@
             <span class="input-group-text">Salas de Cine</span>
           </div>
           <select class="form-control" id="fk_multiplex" name="fk_multiplex" [(ngModel)]="fk_sala">
-            <option value="{{item.id}}" *ngFor="let item of salas.results" [ngValue]="item.id">
-              <div>{{item.v_nombre}}</div>
+            <option value="{{item.id}}" *ngFor="let item of salas.results" [ngValue]="item.fk_sala.id">
+              <div>{{item.fk_sala.i_numsala}}: {{item.fk_sala.fk_multiplex.v_nombre}}</div>
             </option>
           </select>
         </div>

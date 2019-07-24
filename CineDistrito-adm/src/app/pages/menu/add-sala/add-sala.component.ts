@@ -10,23 +10,23 @@ import { Peliculas } from 'src/app/models/peliculas';
   styleUrls: ['./add-sala.component.scss']
 })
 export class AddSalaComponent implements OnInit {
-  salas: Multiplex;
-  peliculas: Peliculas
+  salas: any;
+  funciones: Funciones;
   fk_funcion: Number;
   fk_sala: Number;
   constructor(private service: QueryService) { }
 
   ngOnInit() {
-    this.service.GetPeliculas().subscribe(
+    this.service.GetFuncion().subscribe(
       response => {
-        this.peliculas = response
+        this.funciones = response
         //console.log('this.peliculas: ', this.peliculas);
       },
       error => {
         console.log(error);
       }
     );
-    this.service.GetSalas().subscribe(
+    this.service.GetCreateSala().subscribe(
       response => {
         this.salas = response
         //console.log("this.salas: ", this.salas);

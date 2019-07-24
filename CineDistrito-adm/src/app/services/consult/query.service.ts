@@ -56,6 +56,7 @@ export class QueryService {
       );
 
   }
+
   public GetFuncion() {
     return this.httpClient.get<Funciones>('http://localhost:8000/api/v1/funciones/funciones/')
   }
@@ -73,6 +74,10 @@ export class QueryService {
   public GetSalas() {
     return this.httpClient.get<Multiplex>('http://localhost:8000/api/v1/multiplex/multiplex/')
   }
+  public GetCreateSala() {
+    return this.httpClient.get("http://localhost:8000/api/v1/funciones/funciones-sala/")
+  }
+
   public PostCreateSala(fk_funcion: Number, fk_sala: Number) {
     this.httpClient.post("http://localhost:8000/api/v1/funciones/funciones-sala/",
       {
