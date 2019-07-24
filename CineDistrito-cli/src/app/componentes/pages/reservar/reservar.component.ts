@@ -375,7 +375,9 @@ export class ReservarComponent implements OnInit {
   generarPago(){
     if(this.metodoPagoSeleccionado!=""){
       this.GenerarPagoService.enviarPago(this.metodoPagoSeleccionado, this.silla_lista.reserva.id).subscribe(
-        data=>{console.log(data)},
+        data=>{alert(data);
+        this.Router.navigateByUrl('/');
+        },
         error=>{console.error(error)}        
       )
     }

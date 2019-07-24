@@ -15,6 +15,6 @@ export class ObtenerFacturaService {
     let myheaders = new HttpHeaders();
     myheaders = myheaders.append("Authorization", "Basic " + localStorage.getItem('currentUser'));
     
-    return this.HttpClient.get<Factura>("http://localhost:8000/api/v1/pagos/factura/"+fk_reserva+"?format=json",{headers:myheaders});
+    return this.HttpClient.get<Factura>("http://192.168.43.110:8080/api/v1/pagos/factura/"+fk_reserva+"?format=json",{headers:myheaders});
   }
 }

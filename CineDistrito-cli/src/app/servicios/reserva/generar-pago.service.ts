@@ -18,6 +18,6 @@ export class GenerarPagoService {
 
     console.log("Cuerpo enviarPago -> "+body);
 
-    return this.httpClient.post<any>('http://127.0.0.1:8000/api/v1/pagos/pago/'+pk_reserva,body,{headers:myheaders});
+    return this.httpClient.post<any>('http://192.168.43.110:8080/api/v1/pagos/pago/'+pk_reserva,body,{headers:myheaders});
   }
 }

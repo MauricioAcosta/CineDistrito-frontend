@@ -12,7 +12,7 @@ export class ObtenerPeliculasService {
   private baseURL;
 
   constructor(private httpClient: HttpClient) { 
-    this.baseURL = `http://127.0.0.1:8000/api/v1/funciones/funciones/?format=json`;
+    this.baseURL = `http://192.168.43.110:8080/api/v1/funciones/funciones/?format=json`;
   }
   
   public obtenerPeliculas(next) {
