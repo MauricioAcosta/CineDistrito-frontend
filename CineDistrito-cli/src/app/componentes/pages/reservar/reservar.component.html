@@ -23,21 +23,19 @@
     <h3>Reservar</h3><hr/>
     <div id="Multiplex_formGroup" class="form-group">
       <label for="Multiplex">Selecciona un Multiplex</label>
-      <select [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
+      <select [disabled]="block_FM" [(ngModel)]="multiplexSeleccionado" (change)="onChangeMultiplex()" name="selectedValueM" id="Multiplex" class="form-control">
         <option>...</option>
         <option *ngFor="let cinema of this.multiplex_Lista">{{cinema.v_nombre}}</option>
       </select>
       <div *ngIf="functionsReady" style="margin-top:2em;">
         <label for="Multiplex">Selecciona una Función</label>
-        <select [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
-          <option>...</option>
+        <select [disabled]="block_FM" [(ngModel)]="funcionSeleccionada" (change)="onChangeFunciones()" id="Funciones" name="selectedValueF" id="Multiplex" class="form-control">
           <option *ngFor="let funcion of this.funcion_lista;let i = index">{{i+1}}: Sala : {{funcion.fk_sala.i_numsala}} - Fecha : {{funcion.fk_funcion.d_proyeccion}} - Hora : {{funcion.fk_funcion.t_inicioproyeccion}}</option>
         </select>
     </div>
     </div>
     <br>
     <p style="color: red">{{error_log_in}}</p>
-    <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
     <div *ngIf="seatsReady" id="Asiento_formGroup" class="form-group">
       <label for="Asiento">Selecciona un asiento </label>
 
@@ -153,8 +151,8 @@
   </div>
 
   <button *ngIf="reservaReady" (click)="continuarSnacks()" class="btn btn-danger">Continuar</button>
-  
-  <div *ngIf="snackReady">
+  <!---->
+  <div *ngIf="snackReady" >
     <hr/>
     <p style="size:1.5em;">¿Quieres comprar algún aperitivo para acompañar tu pelicula?</p>
     <br>
@@ -166,9 +164,7 @@
       </div>
     </div>
     <br>
-    <p>Costo : {{precio}}</p>
     <button *ngIf="!waitingResponseS" (click)="enviarDatosProductos()" class="btn btn-danger">Continuar</button>
-    <img *ngIf="waitingResponseS" src="assets/img/esperar.gif" style="margin-left: 2pm">
   </div>
 
   <div *ngIf="facturaReady">
@@ -179,5 +175,17 @@
     <p>Costo total por snacks                : {{factura.precio_snacks}}</p>
     <p>IVA                                   : {{factura.iva}}</p>
     <p>Total Factura                         : {{factura.total}}</p>
+    <p>Puntos acumulados                     : {{factura.puntos_acumulados}}</p>
+    <br>
+    <p>Selecciona el medio de pago: </p>
+    <select [(ngModel)]="metodoPagoSeleccionado" name="selectedValuePa" class="form-control">
+      <option>Efectivo</option>
+      <option>Tarjeta de Credito/Debito</option>
+    </select>
+    <br>
+    <button (click)="generarPago()" class="btn btn-danger">Reservar</button>
   </div>
+  <img *ngIf="waitingResponse" src="assets/img/esperar.gif" style="margin-left: 2pm">
 </div>
+
+<p *ngIf="onTimeLeft" style="color: orange">Tiempo límite de reserva  {{minutes}}:{{seconds}}</p>

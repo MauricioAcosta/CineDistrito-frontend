@@ -1,5 +1,5 @@
 #peliculas-div{
-    background-color: #DAD8D8;
+    background-color: white;
     padding-top: 2em;
     padding-bottom: 2em;
     padding-left: 2em;
@@ -9,4 +9,27 @@
 #peliculas-div .row .card{
     margin-top: 1em;
     margin-bottom: 1em;
+    padding: 0;
+}
+
+#peliculas-div .row .col{
+    padding : 0.5em 0.5em 0.5em 0.5em;
+}
+
+
+#peliculas-div .row .card img{
+    width: 100%;
+}
+
+#presentation-peliculas div{
+    background-color: black;
+}
+
+#presentation-peliculas img{
+    max-height: 100px;
+}
+
+#presentation-peliculas div div p{
+    color: white;
+    font-size: 20px;
 }

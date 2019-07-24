@@ -15,7 +15,7 @@ export class ObtenerListaFuncionesService {
   }
 
   obtenerFuncionesSalas(idMultiplex,idPelicula){
-    return this.httpClient.get<Funcionsala[]>('http://127.0.0.1:8000/api/v1/funciones/funciones-multiplex/'+idPelicula+'/'+idMultiplex+'/?format=json');
+    return this.httpClient.get<Funcionsala[]>('http://192.168.43.110:8080/api/v1/funciones/funciones-multiplex/'+idPelicula+'/'+idMultiplex+'/?format=json');
   }
 
 

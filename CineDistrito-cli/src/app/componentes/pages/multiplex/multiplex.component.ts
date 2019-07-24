@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MultiplexComponent implements OnInit {
 
-  public numbers:any;
+
 
   constructor() {
-    this.numbers = [1,2,3,4,5];
+    
   }
 
   ngOnInit() {

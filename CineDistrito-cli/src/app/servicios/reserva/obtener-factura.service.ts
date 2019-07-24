@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Factura } from 'src/app/models/reserva/factura';
 
 @Injectable({
@@ -12,6 +12,9 @@ export class ObtenerFacturaService {
    }
 
   obtenerFactura(fk_reserva){
-    return this.HttpClient.get<Factura>("http://localhost:8000/api/v1/pagos/factura/"+fk_reserva+"?format=json");
+    let myheaders = new HttpHeaders();
+    myheaders = myheaders.append("Authorization", "Basic " + localStorage.getItem('currentUser'));
+    
+    return this.HttpClient.get<Factura>("http://192.168.43.110:8080/api/v1/pagos/factura/"+fk_reserva+"?format=json",{headers:myheaders});
   }
 }

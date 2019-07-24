@@ -18,7 +18,7 @@ export class ObtenerListadoSillasService {
     myheaders = myheaders.append("Authorization", "Basic " + localStorage.getItem('currentUser'));
     myheaders = myheaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    return this.httpClient.get<Sillas>('http://localhost:8000/api/v1/reservas/disponibilidad-sillas/'+idFuncion+'/'+idSala+'/?format=json',{headers:myheaders});
+    return this.httpClient.get<Sillas>('http://192.168.43.110:8080/api/v1/reservas/disponibilidad-sillas/'+idFuncion+'/'+idSala+'/?format=json',{headers:myheaders});
 
 
   }

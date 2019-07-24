@@ -21,7 +21,7 @@ export class AuthenticationService {
 
     const httpOptions = {headers:myheaders};
 
-    return this.http.post<any>('http://127.0.0.1:8000/api/v1/usuarios/autenticar',{},httpOptions);
+    return this.http.post<any>('http://192.168.43.110:8080/api/v1/usuarios/autenticar',{},httpOptions);
   }
 
 }

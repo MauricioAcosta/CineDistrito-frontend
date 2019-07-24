@@ -1,18 +1,59 @@
 <app-cartelera></app-cartelera>
-  
-<div class="row justify-content-center">
-
-    <div class="col-12 col-sm-3 d-flex" *ngFor="let pelicula of datosPeliculas">
-        <div class="card h-80">
-            <img class="card-img-top"
-                src="{{pelicula.v_foto}}"
-                alt="Card image cap">
-                <div class="card-body">
-                <h5 class="card-title">{{pelicula.v_nombre}}</h5>
-                <p class="card-text">{{pelicula.tx_sinapsis.substring(0,120)}}...</p>
-                <a class="btn btn-danger" (click)="enviarDatosAlServicio(pelicula)" routerLink="/reservar">Reservar</a>
+<div *ngIf="currentseccion">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-3 d-flex" *ngFor="let pelicula of datosPeliculas">
+            <div class="card h-80">
+                <img class="card-img-top"
+                    src="{{pelicula.v_foto}}"
+                    alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">{{pelicula.v_nombre}}</h5>
+                    <p class="card-text">{{pelicula.tx_sinapsis.substring(0,120)}}...</p>
+                    <a class="btn btn-danger" (click)="enviarDatosAlServicio(pelicula)" routerLink="/reservar">Reservar</a>
+                </div>
             </div>
         </div>
     </div>
-
+    <br>
+    <div class="row justify-content-center">
+        <button class="btn btn-danger" (click)='cambiarSeccion()'>Esta semana en CineMark</button>
+    </div>
+    <br>
 </div>
+
+<div *ngIf="!currentseccion">
+    <br>
+    <p style="margin-left:1em;">Seleccione un teatro CineMark de la lista</p>
+    <select style="margin-left:1em;" [(ngModel)]="multiplexSeleccionado" style="max-width:50%" (change)="onChangeMultiplex()" name="selectedValueCM" id="CM" class="form-control">
+        <option>...</option>
+        <option *ngFor="let multiplex of this.lista_Multiplex_CM">{{multiplex.nombre}}</option>
+    </select>
+    <br>
+     <div class="row justify-content-center">
+        <div *ngFor="let pelicula of lista_peliculas_CM" class="col-12 col-sm-3 d-flex">
+            <div class="card h-80">
+                <img class="card-img-top"
+                    src="https://cinemarkmedia.modyocdn.com/co/300x400/{{pelicula.corporate_film_id}}.jpg?"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{pelicula.title}}</h5>
+                    <p class="card-text">{{pelicula.synopsis.substring(0,120)}}...</p>
+                    <p class="card-text">Duración : {{pelicula.runtime}} Minutos</p>
+                    <a class="btn btn-danger" style="color:white" (click)="redirigirCM(pelicula)">Reservar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+        <button class="btn btn-danger" (click)='cambiarSeccion()'>Volver a CineDistrito</button>
+    </div>
+    <br>
+</div>
+
+
+
+
+
+
+

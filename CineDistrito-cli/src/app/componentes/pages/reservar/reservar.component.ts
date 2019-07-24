@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { timer, Observable, Subscription } from 'rxjs';
 
 
 //servicio
@@ -11,6 +12,7 @@ import {CambiarEstadoEnProcesoService} from 'src/app/servicios/reserva/cambiar-e
 import {ObtenerListaSnacksService} from 'src/app/servicios/reserva/obtener-lista-snacks.service';
 import {EnviarDatosSnacksService} from 'src/app/servicios/reserva/enviar-datos-snacks.service';
 import {ObtenerFacturaService} from 'src/app/servicios/reserva/obtener-factura.service'
+import {GenerarPagoService} from 'src/app/servicios/reserva/generar-pago.service'
 
 
 //modelo
@@ -18,7 +20,7 @@ import { Fkpelicula } from 'src/app/models/obtener-peliculas';
 import { Multiplex } from 'src/app/models/reserva/multiplex';
 import {Funcionsala} from 'src/app/models/reserva/funcionsala';
 import { Sillas, Silla } from 'src/app/models/reserva/sillas';
-import { ListaSnacks, Snack } from 'src/app/models/reserva/lista-snacks';
+import { Snack } from 'src/app/models/reserva/lista-snacks';
 import { Factura } from 'src/app/models/reserva/factura';
 
 
@@ -27,6 +29,8 @@ import { Factura } from 'src/app/models/reserva/factura';
   templateUrl: './reservar.component.html',
   styleUrls: ['./reservar.component.scss']
 })
+
+
 
 export class ReservarComponent implements OnInit {
 
@@ -42,7 +46,17 @@ export class ReservarComponent implements OnInit {
   private error_log_in:string;
   private waitingResponse:boolean;
   private onSillas:boolean;
+  private block_FM:boolean;
+  
 
+  //timer
+  private timeLeft:number;
+  private clocksub:Subscription;
+  private onTimeLeft:boolean;
+  private minutes:number;
+  private seconds:number;  
+
+  
   constructor(private CompartirDatoPeliculaCarteleraReservaService:CompartirDatoPeliculaCarteleraReservaService,
               private ObtenerListaMultiplexService:ObtenerListaMultiplexService,
               private ObtenerListaFuncionesService:ObtenerListaFuncionesService,
@@ -51,7 +65,8 @@ export class ReservarComponent implements OnInit {
               private Router:Router,
               private ObtenerListaSnacksService:ObtenerListaSnacksService,
               private EnviarDatosSnacksService:EnviarDatosSnacksService,
-              private ObtenerFacturaService:ObtenerFacturaService) {
+              private ObtenerFacturaService:ObtenerFacturaService,
+              private GenerarPagoService:GenerarPagoService) {
 
     this.onSillas = true;
     this.seatsState = [];
@@ -59,6 +74,9 @@ export class ReservarComponent implements OnInit {
     this.functionsReady = false;
     this.error_log_in = "";
     this.waitingResponse = false;
+    this.block_FM = false;
+    this.funcionSeleccionada = "";
+
     //snacks
     this.reservaReady= false;
     this.snackReady = false
@@ -68,16 +86,41 @@ export class ReservarComponent implements OnInit {
     //factura
     this.facturaReady = false;
     this.factura = null;
-    
+
+    //tiempo de reserva
+    this.timeLeft = 290;
+
+    //pago
+    this.metodoPagoSeleccionado = "";
   }
 
   ngOnInit() {
+    this.clocksub = null;
     this.info_pelicula = this.CompartirDatoPeliculaCarteleraReservaService.getPelicula();
     //getting Multiplex list
     this.ObtenerListaMultiplexService.obtenerMultiplexLista(this.info_pelicula.id).subscribe
     (data=>{this.multiplex_Lista = data},error => {console.error(error)});
 
     let s:String[]=[];
+  }
+
+  //tiempo restante
+  calcularReloj(){
+    this.timeLeft = this.timeLeft -1;
+    if(this.timeLeft<=0){
+      alert('Su tiempo de reserva expiró')
+      this.Router.navigateByUrl('/cartelera_actual');
+    }else{
+      this.minutes = parseInt(''+(this.timeLeft/60));
+      this.seconds = parseInt(''+(((+this.timeLeft)/60-this.minutes)*60));
+    }
+  }
+
+  ngOnDestroy(){
+    this.liberarSillas();
+    if(this.clocksub){
+      this.clocksub.unsubscribe();
+    }
   }
 
 
@@ -95,6 +138,11 @@ export class ReservarComponent implements OnInit {
   }
 
   onChangeFunciones(){
+    if(!this.clocksub){
+      this.clocksub = timer(0,1000).subscribe(val=>{this.calcularReloj()});
+      this.onTimeLeft = true;
+    }
+    this.block_FM = true;
     this.error_log_in = "";
     this.seatsReady= false;
     this.waitingResponse = false;
@@ -141,7 +189,10 @@ export class ReservarComponent implements OnInit {
     //verify if there's an active chair to continue with the reserve process
     if (this.seatsState.find(function(element){return element=="active"})){
       this.reservaReady = true;
+      this.block_FM = true;
       this.generarListaSnacks(null);
+    }else{
+      this.block_FM = false;
     }
 
     this.seatsReady= true;
@@ -160,15 +211,7 @@ export class ReservarComponent implements OnInit {
     }else{
       let indice = +this.funcionSeleccionada.split(':')[0] - 1;
 
-      let Silla:Silla=null;
-
-      Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
-
-      if(Silla == null){
-        Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
-      }
-
-      let idSilla = Silla.id;
+      let idSilla = this.obtenerSillaId(i_numsilla);
 
       console.log('S '+idSilla+' FS'+this.funcion_lista[indice].id+' R'+this.silla_lista.reserva.id+' F'+this.funcion_lista[indice].fk_funcion.id+' S'+this.funcion_lista[indice].fk_sala.id);
       this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(idSilla,this.funcion_lista[indice].id,this.silla_lista.reserva.id,this.funcion_lista[indice].fk_funcion.id,this.funcion_lista[indice].fk_sala.id).subscribe(
@@ -188,6 +231,23 @@ export class ReservarComponent implements OnInit {
       );
     }
   
+  }
+
+  obtenerSillaId(i_numsilla){
+
+    let Silla:Silla=null;
+
+    Silla = this.silla_lista.disponible.find(function(element){return element.i_orden==i_numsilla});
+
+    if(Silla == null){
+      Silla = this.silla_lista.proceso.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
+    }
+
+    if(Silla == null){
+      Silla = this.silla_lista.reservadas.find(function(element){return element.fk_silla.i_orden==i_numsilla}).fk_silla;
+    }
+
+    return Silla.id;
   }
 
 
@@ -234,7 +294,6 @@ export class ReservarComponent implements OnInit {
   }
 
   enviarDatosProductos(){
-    this.waitingResponseS = true;
     let selectedSnack : Snack[] = [];
     for (let item of this.snack_Lista){
       if (item.selected){
@@ -242,14 +301,16 @@ export class ReservarComponent implements OnInit {
       }
     }
     for (let item of selectedSnack){
+      this.waitingResponseS = true;
+      this.waitingResponse = true;
       console.log('Se envio -> '+item.v_nombre+' cantidad->'+item.cantidad);
       this.EnviarDatosSnacksService.enviarDatosSnack(item.cantidad,this.silla_lista.reserva.id,item.id).subscribe(
         data=>{
           console.log(data);
           if(item == selectedSnack[selectedSnack.length-1]){
             this.waitingResponseS = false;
+            this.waitingResponse = false;
             this.snackReady = false;
-            this.facturaReady = true;
             this.obtenerDatosFactura(this.silla_lista.reserva.id);
           }
         },
@@ -257,6 +318,30 @@ export class ReservarComponent implements OnInit {
           console.error(error);
         }
       )
+    }
+    if(selectedSnack.length==0){
+      this.waitingResponseS = false;
+      this.waitingResponse = false;
+      this.snackReady = false;
+      this.obtenerDatosFactura(this.silla_lista.reserva.id);
+    }
+  }
+
+  liberarSillas(){
+    let indice = +this.funcionSeleccionada.split(':')[0] - 1;
+    for (let seat in this.seatsState){
+      if (this.seatsState[seat]=='active'){
+        this.CambiarEstadoEnProcesoService.cambiarEstadoEnProceso(
+          this.obtenerSillaId(seat),
+          this.funcion_lista[indice].id,
+          this.silla_lista.reserva.id,
+          this.funcion_lista[indice].fk_funcion.id,
+          this.funcion_lista[indice].fk_sala.id
+        ).subscribe(
+          data=>{console.log(seat+' id '+this.obtenerSillaId(seat)+' '+data)},
+          error=>{console.error(error)}
+        )
+      }
     }
   }
 
@@ -268,13 +353,34 @@ export class ReservarComponent implements OnInit {
   private factura:Factura;
 
   obtenerDatosFactura(fk_reserva){
+    this.waitingResponse = true;
     this.ObtenerFacturaService.obtenerFactura(fk_reserva).subscribe(
       data=>{
         this.factura = data;
+        this.facturaReady = true;
+        this.waitingResponse = false;
       },
       error=>{
         console.error(error);
       }
     )
   }
+
+
+  /////////////////////////////////////////////////////////////////////////////
+  //SECCION DE PAGO
+  /////////////////////////////////////////////////////////////////////////////
+  private metodoPagoSeleccionado:string;
+
+  generarPago(){
+    if(this.metodoPagoSeleccionado!=""){
+      this.GenerarPagoService.enviarPago(this.metodoPagoSeleccionado, this.silla_lista.reserva.id).subscribe(
+        data=>{alert(data);
+        this.Router.navigateByUrl('/');
+        },
+        error=>{console.error(error)}        
+      )
+    }
+  }
+
 }
