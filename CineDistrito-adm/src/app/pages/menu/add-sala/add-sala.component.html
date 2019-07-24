@@ -9,7 +9,7 @@
           </div>
           <select class="form-control" id="fk_pelicula" name="fk_pelicula" [(ngModel)]="fk_funcion">
             <option value="{{item.id}}" *ngFor="let item of funciones.results; let i = index" [ngValue]="item.id">
-              <div>{{item.id}}: {{item.fk_pelicula.v_nombre}} </div>
+              <div>Función {{item.id}}: {{item.fk_pelicula.v_nombre}} </div>
             </option>
           </select>
         </div>
@@ -21,7 +21,7 @@
           </div>
           <select class="form-control" id="fk_multiplex" name="fk_multiplex" [(ngModel)]="fk_sala">
             <option value="{{item.id}}" *ngFor="let item of salas.results" [ngValue]="item.fk_sala.id">
-              <div>{{item.fk_sala.i_numsala}}: {{item.fk_sala.fk_multiplex.v_nombre}}</div>
+              <div>Sala: {{item.fk_sala.i_numsala}}: {{item.fk_sala.fk_multiplex.v_nombre}}</div>
             </option>
           </select>
         </div>
